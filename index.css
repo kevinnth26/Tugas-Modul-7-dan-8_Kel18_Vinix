@@ -1,0 +1,67 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+body { background-color: #E5E7EB; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 1rem 0; }
+
+.mobile-wrapper { 
+    width: 100%; max-width: 400px; background-color: #F3F4F6; display: flex; flex-direction: column; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative; 
+}
+@media (min-width: 480px) {
+    .mobile-wrapper { height: 95vh; max-height: 850px; border-radius: 24px; overflow: hidden; }
+}
+@media (max-width: 479px) {
+    .mobile-wrapper { min-height: 100vh; border-radius: 0; } body { padding: 0; }
+}
+
+.content-area { flex: 1; overflow-y: auto; overflow-x: hidden; }
+
+/* Header & Card Saldo */
+.header-blue { background-color: #1A365D; color: white; padding: 2.5rem 1.5rem 4rem 1.5rem; }
+.user-info { display: flex; justify-content: space-between; align-items: center; }
+.user-info h1 { font-size: 1.25rem; font-weight: 700; margin-bottom: 4px; }
+.user-info p { font-size: 0.85rem; color: #93C5FD; }
+.avatar { width: 40px; height: 40px; background-color: white; border-radius: 50%; }
+
+.main-content { padding: 0 1.5rem; margin-top: -2.5rem; }
+.balance-card { background-color: #0F172A; color: white; padding: 1.5rem; border-radius: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 1.5rem; }
+.balance-header { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: #9CA3AF; margin-bottom: 0.5rem; }
+.balance-card h2 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.5rem; }
+.balance-card p { font-size: 0.75rem; color: #9CA3AF; }
+
+/* Quick Actions */
+.quick-actions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 1.5rem; }
+.action-btn { background: white; border: none; padding: 1rem 0.5rem; border-radius: 12px; display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.action-btn span { font-size: 0.75rem; font-weight: 600; color: #1F2937; }
+
+/* Sections & Lists */
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; margin-top: 1.5rem; }
+.section-header h3 { font-size: 1rem; font-weight: 700; color: #111827; }
+.section-header a { font-size: 0.8rem; color: #3B82F6; text-decoration: none; font-weight: 600; }
+
+.list-card { background: white; border-radius: 16px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+.list-card.clickable { cursor: pointer; transition: background 0.2s; }
+.list-card.clickable:hover { background: #F9FAFB; }
+.list-item { display: flex; align-items: center; gap: 12px; }
+.divider { height: 1px; background: #E5E7EB; margin: 1rem 0; }
+
+/* Icon & Date Boxes */
+.icon-box { width: 40px; height: 40px; border-radius: 10px; display: flex; justify-content: center; align-items: center; }
+.green-bg { background-color: #D1FAE5; }
+.red-bg { background-color: #FEE2E2; }
+.date-box { width: 45px; height: 50px; background-color: #F3F4F6; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+.date-num { font-size: 1rem; font-weight: 700; color: #1A365D; }
+.date-month { font-size: 0.65rem; font-weight: 600; color: #6B7280; }
+
+/* Text Details */
+.item-details { flex: 1; }
+.item-details h4 { font-size: 0.9rem; font-weight: 600; color: #111827; margin-bottom: 2px; }
+.item-details p { font-size: 0.75rem; color: #6B7280; }
+.item-amount { font-size: 0.9rem; font-weight: 700; }
+.text-green { color: #10B981; }
+.text-red { color: #EF4444; }
+.badge { background-color: #F3F4F6; color: #1A365D; font-size: 0.7rem; font-weight: 600; padding: 4px 10px; border-radius: 12px; }
+
+/* Bottom Navigation */
+.bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 0.75rem 0 1.5rem 0; border-top: 1px solid #E5E7EB; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #9CA3AF; }
+.nav-item span { font-size: 0.75rem; font-weight: 500; }
+.nav-item.active { color: #1A365D; }

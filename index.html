@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - RuangWarga</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="mobile-wrapper">
+        <!-- Area Konten Utama yang bisa di-scroll -->
+        <div class="content-area">
+            <!-- Header Biru -->
+            <div class="header-blue">
+                <div class="user-info">
+                    <div>
+                        <h1>Halo, Budi!</h1>
+                        <p>Sabtu, 3 Oktober 2026</p>
+                    </div>
+                    <div class="avatar"></div>
+                </div>
+            </div>
+
+            <!-- Konten Bawah (Abu-abu) -->
+            <div class="main-content">
+                <!-- Kartu Saldo -->
+                <div class="balance-card">
+                    <div class="balance-header">
+                        <span>Total Saldo Kas RT</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 8h20M6 16h.01"/></svg>
+                    </div>
+                    <h2>Rp 5.000.000</h2>
+                    <p>Diperbarui hari ini pukul 08.30</p>
+                </div>
+
+                <!-- Menu Aksi Cepat -->
+                <div class="quick-actions">
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A365D" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                        <span>Bayar Iuran</span>
+                    </button>
+                    <button class="action-btn" id="btnPinjam">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A365D" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                        <span>Pinjam Aset</span>
+                    </button>
+                    <button class="action-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A365D" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        <span>Panel Admin</span>
+                    </button>
+                </div>
+
+                <!-- Arus Saldo Kas -->
+                <div class="section-header">
+                    <h3>Arus Saldo Kas</h3>
+                    <a href="#">Lihat semua</a>
+                </div>
+                <div class="list-card">
+                    <div class="list-item">
+                        <div class="icon-box green-bg">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><polyline points="7 17 17 17 17 7"/><line x1="7" y1="17" x2="17" y2="7"/></svg>
+                        </div>
+                        <div class="item-details">
+                            <h4>Iuran September</h4>
+                            <p>Hari ini, 08.15</p>
+                        </div>
+                        <div class="item-amount text-green">+Rp 150.000</div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="list-item">
+                        <div class="icon-box red-bg">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><polyline points="7 7 17 7 17 17"/><line x1="17" y1="7" x2="7" y2="17"/></svg>
+                        </div>
+                        <div class="item-details">
+                            <h4>Perbaikan pos ronda</h4>
+                            <p>28 Sep 2026</p>
+                        </div>
+                        <div class="item-amount text-red">-Rp 450.000</div>
+                    </div>
+                </div>
+
+                <!-- Jadwal Kegiatan -->
+                <div class="section-header">
+                    <h3>Jadwal Kegiatan</h3>
+                    <a href="jadwal.html">Lihat semua</a>
+                </div>
+                <div class="list-card clickable" onclick="window.location.href='jadwal.html'">
+                    <div class="list-item">
+                        <div class="date-box">
+                            <span class="date-num">11</span>
+                            <span class="date-month">OKT</span>
+                        </div>
+                        <div class="item-details">
+                            <h4>Kerja Bakti Lingkungan</h4>
+                            <p>07.00 • Titik kumpul Pos RT</p>
+                        </div>
+                        <div class="badge">Terjadwal</div>
+                    </div>
+                </div>
+                <div class="list-card clickable" style="margin-top: 10px;" onclick="window.location.href='jadwal.html'">
+                    <div class="list-item">
+                        <div class="date-box">
+                            <span class="date-num">16</span>
+                            <span class="date-month">OKT</span>
+                        </div>
+                        <div class="item-details">
+                            <h4>Rapat Warga</h4>
+                            <p>19.00 • Titik kumpul Pos RT</p>
+                        </div>
+                        <div class="badge">Terjadwal</div>
+                    </div>
+                </div>
+                
+                <!-- Spasi kosong agar konten tidak tertutup navigasi bawah -->
+                <div style="height: 80px;"></div> 
+            </div>
+        </div>
+
+        <!-- Navigasi Bawah -->
+        <div class="bottom-nav">
+            <a href="index.html" class="nav-item active">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                <span>Beranda</span>
+            </a>
+            <a href="katalog.html" class="nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                <span>Katalog</span>
+            </a>
+            <a href="#" class="nav-item">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span>Profil</span>
+            </a>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
