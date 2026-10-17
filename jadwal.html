@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Kegiatan - RuangWarga</title>
+    <link rel="stylesheet" href="jadwal.css">
+</head>
+<body>
+    <div class="mobile-wrapper">
+        <div class="content-area">
+            <!-- Header Putih -->
+            <div class="header">
+                <a href="index.html" class="back-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A365D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                </a>
+                <div class="header-text">
+                    <h1>Jadwal Kegiatan</h1>
+                    <p>Jadwal aktivitas kewajiban warga</p>
+                </div>
+            </div>
+            <hr class="divider">
+
+            <div class="main-content">
+                <!-- Kalender -->
+                <div class="calendar-card">
+                    <div class="calendar-header">
+                        <svg class="nav-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+                        <h3 class="month-title">October</h3>
+                        <svg class="nav-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                    
+                    <div class="calendar-grid days">
+                        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                    </div>
+                    <div class="calendar-grid dates">
+                        <!-- Baris 1 -->
+                        <span></span><span></span><span></span><span>1</span><span>2</span><span>3</span><span>4</span>
+                        <!-- Baris 2 -->
+                        <span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span class="highlight">11</span>
+                        <!-- Baris 3 -->
+                        <span>12</span><span>13</span><span>14</span><span>15</span><span class="highlight">16</span><span>17</span><span>18</span>
+                        <!-- Baris 4 -->
+                        <span>19</span><span>20</span><span>21</span><span>22</span><span>23</span><span>24</span><span class="highlight">25</span>
+                        <!-- Baris 5 -->
+                        <span>26</span><span>27</span><span>28</span><span>29</span><span>30</span><span>31</span><span></span>
+                    </div>
+                </div>
+
+                <!-- Daftar Kegiatan -->
+                <div class="list-card">
+                    <div class="list-item">
+                        <div class="date-box">
+                            <span class="date-num">11</span>
+                            <span class="date-month">OKT</span>
+                        </div>
+                        <div class="item-details">
+                            <h4>Kerja Bakti Lingkungan</h4>
+                            <p>07.00 • Titik kumpul Pos RT</p>
+                        </div>
+                        <div class="badge">Terjadwal</div>
+                    </div>
+                </div>
+
+                <div class="list-card">
+                    <div class="list-item">
+                        <div class="date-box">
+                            <span class="date-num">16</span>
+                            <span class="date-month">OKT</span>
+                        </div>
+                        <div class="item-details">
+                            <h4>Rapat Warga</h4>
+                            <p>19.00 • Titik kumpul Pos RT</p>
+                        </div>
+                        <div class="badge">Terjadwal</div>
+                    </div>
+                </div>
+
+                <div class="list-card">
+                    <div class="list-item">
+                        <div class="date-box">
+                            <span class="date-num">25</span>
+                            <span class="date-month">OKT</span>
+                        </div>
+                        <div class="item-details">
+                            <h4>Kerja Bakti Lingkungan</h4>
+                            <p>07.00 • Titik kumpul Pos RT</p>
+                        </div>
+                        <div class="badge">Terjadwal</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="jadwal.js"></script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+body { background-color: #E5E7EB; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 1rem 0; }
+
+.mobile-wrapper { 
+    width: 100%; max-width: 400px; background-color: #F3F4F6; display: flex; flex-direction: column; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative; 
+}
+@media (min-width: 480px) {
+    .mobile-wrapper { height: 95vh; max-height: 850px; border-radius: 24px; overflow: hidden; }
+}
+@media (max-width: 479px) {
+    .mobile-wrapper { min-height: 100vh; border-radius: 0; } body { padding: 0; }
+}
+
+.content-area { flex: 1; overflow-y: auto; overflow-x: hidden; background-color: #F3F4F6;}
+
+/* Header */
+.header { display: flex; align-items: center; gap: 15px; padding: 2rem 1.5rem 1rem 1.5rem; background: white;}
+.back-btn { display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer;}
+.header-text h1 { font-size: 1.25rem; font-weight: 700; color: #111827; margin-bottom: 2px; }
+.header-text p { font-size: 0.75rem; color: #6B7280; }
+.divider { border: 0; height: 1px; background: #E5E7EB; }
+
+.main-content { padding: 1.5rem; }
+
+/* Kalender UI */
+.calendar-card { background: white; padding: 1.5rem; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 1.5rem; }
+.calendar-header { display: flex; justify-content: center; align-items: center; gap: 20px; margin-bottom: 1.5rem; }
+.month-title { font-size: 1rem; font-weight: 700; color: #111827; }
+.nav-arrow { cursor: pointer; }
+
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; gap: 10px; margin-bottom: 10px; }
+.calendar-grid.days span { font-size: 0.7rem; color: #9CA3AF; font-weight: 500; }
+.calendar-grid.dates span { font-size: 0.85rem; color: #374151; font-weight: 500; height: 32px; width: 32px; display: flex; justify-content: center; align-items: center; margin: auto; }
+.calendar-grid.dates span.highlight { background-color: #1A365D; color: white; border-radius: 50%; font-weight: 600; box-shadow: 0 2px 4px rgba(26, 54, 93, 0.3); }
+
+/* List Kegiatan (Desain sama seperti Dashboard) */
+.list-card { background: white; border-radius: 16px; padding: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 1rem; }
+.list-item { display: flex; align-items: center; gap: 12px; }
+.date-box { width: 45px; height: 50px; background-color: #F3F4F6; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; flex-shrink: 0;}
+.date-num { font-size: 1rem; font-weight: 700; color: #1A365D; }
+.date-month { font-size: 0.65rem; font-weight: 600; color: #6B7280; }
+.item-details { flex: 1; }
+.item-details h4 { font-size: 0.9rem; font-weight: 600; color: #111827; margin-bottom: 2px; }
+.item-details p { font-size: 0.75rem; color: #6B7280; }
+.badge { background-color: #F3F4F6; color: #1A365D; font-size: 0.7rem; font-weight: 600; padding: 4px 10px; border-radius: 12px; }
