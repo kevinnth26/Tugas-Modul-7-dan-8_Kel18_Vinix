@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verifikasi Iuran Warga - Admin</title>
+    <link rel="stylesheet" href="verifikasi-iuran.css">
+</head>
+<body>
+    <div class="mobile-wrapper">
+        <!-- Header -->
+        <div class="header">
+            <a href="dashboard.html" class="back-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A365D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </a>
+            <div class="header-text">
+                <h1>Verifikasi Iuran Warga</h1>
+            </div>
+        </div>
+        <hr class="divider">
+
+        <div class="content-area">
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <h2>Iuran Warga</h2>
+                <div class="dropdown-filter">
+                    <span>Menunggu</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+            </div>
+
+            <!-- List Iuran Warga -->
+            <div class="iuran-list" id="iuranList">
+                <!-- Item 1: Budi Santoso -->
+                <div class="iuran-card" onclick="openModal('budi')">
+                    <div class="iuran-left">
+                        <div class="check-icon-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                        <div class="iuran-detail">
+                            <h3>Budi Santoso</h3>
+                            <p>NIK 3273 0012 • 2 Bulan</p>
+                        </div>
+                    </div>
+                    <div class="iuran-right">
+                        <span class="status-badge">Menunggu</span>
+                        <span class="nominal">Rp 20.000</span>
+                    </div>
+                </div>
+
+                <!-- Item 2: Natasya Cinta A. -->
+                <div class="iuran-card" onclick="openModal('natasya')">
+                    <div class="iuran-left">
+                        <div class="check-icon-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                        <div class="iuran-detail">
+                            <h3>Natasya Cinta A.</h3>
+                            <p>NIK 3273 0034 • 1 Bulan</p>
+                        </div>
+                    </div>
+                    <div class="iuran-right">
+                        <span class="status-badge">Menunggu</span>
+                        <span class="nominal">Rp 10.000</span>
+                    </div>
+                </div>
+
+                <!-- Item 3: Muhammad Ali -->
+                <div class="iuran-card" onclick="openModal('ali')">
+                    <div class="iuran-left">
+                        <div class="check-icon-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                        <div class="iuran-detail">
+                            <h3>Muhammad Ali</h3>
+                            <p>NIK 3273 0078 • 1 Bulan</p>
+                        </div>
+                    </div>
+                    <div class="iuran-right">
+                        <span class="status-badge">Menunggu</span>
+                        <span class="nominal">Rp 10.000</span>
+                    </div>
+                </div>
+
+                <!-- Item 4: Sri Suaeni -->
+                <div class="iuran-card" onclick="openModal('sri')">
+                    <div class="iuran-left">
+                        <div class="check-icon-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                        <div class="iuran-detail">
+                            <h3>Sri Suaeni</h3>
+                            <p>NIK 3273 0091 • 1 Bulan</p>
+                        </div>
+                    </div>
+                    <div class="iuran-right">
+                        <span class="status-badge">Menunggu</span>
+                        <span class="nominal">Rp 10.000</span>
+                    </div>
+                </div>
+
+                <!-- Item 5: Amadi -->
+                <div class="iuran-card" onclick="openModal('amadi')">
+                    <div class="iuran-left">
+                        <div class="check-icon-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                        <div class="iuran-detail">
+                            <h3>Amadi</h3>
+                            <p>NIK 3273 0104 • 1 Bulan</p>
+                        </div>
+                    </div>
+                    <div class="iuran-right">
+                        <span class="status-badge">Menunggu</span>
+                        <span class="nominal">Rp 10.000</span>
+                    </div>
+                </div>
+
+                <!-- Item 6: Lilik Iiati -->
+                <div class="iuran-card" onclick="openModal('lilik')">
+                    <div class="iuran-left">
+                        <div class="check-icon-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                        <div class="iuran-detail">
+                            <h3>Lilik Iiati</h3>
+                            <p>NIK 3273 0119 • 1 Bulan</p>
+                        </div>
+                    </div>
+                    <div class="iuran-right">
+                        <span class="status-badge">Menunggu</span>
+                        <span class="nominal">Rp 10.000</span>
+                    </div>
+                </div>
+
+                <!-- Item 7: Jackson -->
+                <div class="iuran-card" onclick="openModal('jackson')">
+                    <div class="iuran-left">
+                        <div class="check-icon-box"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+                        <div class="iuran-detail">
+                            <h3>Jackson</h3>
+                            <p>NIK 3273 0127 • 3 Bulan</p>
+                        </div>
+                    </div>
+                    <div class="iuran-right">
+                        <span class="status-badge">Menunggu</span>
+                        <span class="nominal">Rp 30.000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 40px;"></div>
+        </div>
+    </div>
+
+    <!-- POP-UP DETAIL BUKTI TRANSFER -->
+    <div id="detailModal" class="modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header-info">
+                <h4>Bukti Transfer</h4>
+                <p id="modalSubHeader">Budi Santoso - 22 September 2026</p>
+            </div>
+            
+            <div class="transfer-success-box">
+                <div class="big-check-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
+                </div>
+                <h5>Transfer Berhasil</h5>
+                <h3 id="modalNominal">Rp 20.000</h3>
+            </div>
+
+            <div class="modal-details-table">
+                <div class="row"><span>Sumber Dana</span> <strong id="valSumber">Tabungan BJB • 4417</strong></div>
+                <div class="row"><span>Penerima</span> <strong>Kas RT 05 / RW 12</strong></div>
+                <div class="row"><span>No. Rekening</span> <strong>0012-3456-7890</strong></div>
+                <div class="row"><span>Keterangan</span> <strong id="valKeterangan">Iuran 2 bulan</strong></div>
+                <div class="row"><span>Nama</span> <strong id="valNama">Budi Santoso</strong></div>
+                <div class="row"><span>Dawis</span> <strong>Dawis 01–05</strong></div>
+                <div class="row"><span>Bulan Tagihan</span> <strong id="valTagihan">Agustus + September 2026</strong></div>
+            </div>
+
+            <div class="modal-action-buttons">
+                <button class="btn-tolak" onclick="actionTolak()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    Tolak
+                </button>
+                <button class="btn-sah" onclick="actionSah()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    Verifikasi Sah
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- POP-UP STATUS BERHASIL DITOLAK -->
+    <div id="rejectModal" class="modal-overlay">
+        <div class="modal-popup-small">
+            <div class="big-check-icon red-bg">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </div>
+            <h4>Iuran Tidak Sah<br>Berhasil Ditolak</h4>
+            <button class="btn-lanjut" onclick="closeAllModals()">Lanjut</button>
+        </div>
+    </div>
+
+    <!-- POP-UP KAS BERHASIL DITAMBAHKAN -->
+    <div id="successModal" class="modal-overlay">
+        <div class="modal-popup-small">
+            <div class="big-check-icon">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="3.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <h4>Kas berhasil ditambahkan</h4>
+            <div class="success-info-box">
+                <div class="row"><span>ID Transaksi</span> <strong>TRX-2609-0041</strong></div>
+                <div class="row"><span>Di Catat Oleh</span> <strong>Haryanto Wijaya</strong></div>
+                <div class="row"><span>Waktu</span> <strong>22 Sep 2026, 20:14</strong></div>
+            </div>
+            <button class="btn-lanjut" onclick="closeAllModals()">Lanjut</button>
+        </div>
+    </div>
+
+    <script src="verifikasi-iuran.js"></script>
+</body>
+</html>
