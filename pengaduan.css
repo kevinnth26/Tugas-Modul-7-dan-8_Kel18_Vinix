@@ -1,0 +1,24 @@
+.form-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+.textarea {
+  width: 100%; resize: vertical; min-height: 110px;
+  background: #fff; border: 1.5px dashed var(--navy-700); border-radius: 10px;
+  padding: 14px; font-size: 15px; outline: 0;
+}
+.textarea::placeholder { color: var(--muted); }
+.textarea:focus { box-shadow: 0 0 0 3px rgba(22, 58, 99, .25); }
+
+/* ---------- Penyesuaian khusus halaman ini (tanpa mengubah file bersama) ---------- */
+.fab, #drawer-layer { display: none !important; }
+
+/* Bingkai ponsel 393 x 852 (ukuran frame Figma) */
+@media (min-width: 768px) {
+  body { padding: 12px 0; }
+  .app { max-width: 393px; min-height: min(852px, calc(100dvh - 24px)); }
+}
+@media (min-width: 1100px) {
+  .app { max-width: 393px; }
+}
+@media (min-width: 768px) and (max-height: 800px) {
+  .appbar { padding-top: 12px; padding-bottom: 12px; }
+  .stack { padding-top: 16px; padding-bottom: 24px; gap: 14px; }
+}

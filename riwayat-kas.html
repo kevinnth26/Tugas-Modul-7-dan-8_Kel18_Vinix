@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1f3a">
+  <title>Riwayat Kas – RuangWarga</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="riwayat-kas.css">
+  <script src="common.js" defer></script>
+  <script src="riwayat-kas.js" defer></script>
+</head>
+<body>
+
+<div class="app" id="app">
+  <main id="main">
+
+    <section class="view" aria-label="Riwayat Kas Warga">
+      <header class="appbar appbar--simple">
+        <a class="appbar__back" href="manajemen-keuangan.html" aria-label="Kembali ke halaman Manajemen Keuangan"><svg class="i" aria-hidden="true"><use href="#i-back"/></svg></a>
+        <div class="appbar__text"><h1>Riwayat Kas</h1></div>
+      </header>
+
+      <div class="stack stack--plain">
+        <div class="row-between">
+          <h2 class="section-title section-title--lg">Riwayat Kas</h2>
+          <label class="select-wrap">
+            <span class="sr-only">Pilih bulan</span>
+            <select id="kas-month" class="select" aria-label="Pilih bulan">
+              <option value="januari">Januari</option>
+              <option value="februari">Februari</option>
+              <option value="maret">Maret</option>
+              <option value="april">April</option>
+              <option value="mei">Mei</option>
+              <option value="juni">Juni</option>
+              <option value="juli">Juli</option>
+              <option value="agustus">Agustus</option>
+              <option value="september">September</option>
+              <option value="oktober" selected>Oktober</option>
+            </select>
+            <svg class="i" aria-hidden="true"><use href="#i-chevron"/></svg>
+          </label>
+        </div>
+        <ul class="tx" id="kas-list" aria-live="polite"></ul>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>

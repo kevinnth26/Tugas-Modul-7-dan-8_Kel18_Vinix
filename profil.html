@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1f3a">
+  <title>Profil Saya – RuangWarga</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href= "profil.css">
+  <script src="common.js" defer></script>
+  <script src="profil.js" defer></script>
+</head>
+<body>
+
+<div class="app" id="app">
+  <main id="main">
+
+    <section class="view" aria-label="Profil Saya">
+      <header class="hero">
+        <h1 class="hero__title">Profil Saya</h1>
+        <div class="avatar" data-bind="initial" aria-hidden="true">B</div>
+        <p class="hero__name" data-bind="name">Budi Santoso</p>
+        <span class="badge-verified">
+          <svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Warga terverifikasi
+        </span>
+      </header>
+
+      <div class="sheet">
+        <h2 class="sheet__title">Kelola akun</h2>
+        <p class="lead">Perbarui data pribadi dan akses layanan pengaduan warga.</p>
+
+        <a class="menu-card" href="detail-profil.html">
+          <span class="menu-card__icon"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg></span>
+          <span class="menu-card__text">
+            <strong>Detail Profil</strong>
+            <small>Periksa dan ubah data diri</small>
+          </span>
+          <svg class="i menu-card__chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+        </a>
+
+        <a class="menu-card" href="pengaduan.html">
+          <span class="menu-card__icon"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg></span>
+          <span class="menu-card__text">
+            <strong>Pengaduan</strong>
+            <small>Kirim laporan kepada pengurus</small>
+          </span>
+          <svg class="i menu-card__chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+        </a>
+
+        <button type="button" class="menu-card menu-card--danger" id="btn-signout">
+          <span class="menu-card__icon"><svg class="i" aria-hidden="true"><use href="#i-trash"/></svg></span>
+          <span class="menu-card__text">
+            <strong>Sign Out</strong>
+            <small>Keluar dari akun ini</small>
+          </span>
+          <svg class="i menu-card__chev" aria-hidden="true"><use href="#i-chevron"/></svg>
+        </button>
+
+        <p class="hint">
+          <svg class="i" aria-hidden="true"><use href="#i-help"/></svg>
+          <span>Pastikan data profil selalu terbaru agar layanan warga tetap tepat sasaran.</span>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="tabbar" id="tabbar" aria-label="Navigasi utama">
+    <a class="tabbar__item" href="index.html" data-tab="dashboard"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg><span>Beranda</span></a>
+    <a class="tabbar__item" href="katalog.html" data-tab="katalog"><svg class="i" aria-hidden="true"><use href="#i-box"/></svg><span>Katalog</span></a>
+    <a class="tabbar__item" href="profil.html" data-tab="profil" aria-current="page"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg><span>Profil</span></a>
+  </nav>
+</div>
+
+</body>
+</html>

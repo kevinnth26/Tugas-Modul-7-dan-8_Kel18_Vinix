@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1f3a">
+  <title>Dashboard Admin – RuangWarga</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="common.js" defer></script>
+  <script src="dashboard.js" defer></script>
+</head>
+<body>
+
+<div class="app" id="app">
+  <main id="main">
+
+    <section class="view" aria-label="Dashboard Admin">
+      <header class="appbar">
+        <a class="appbar__back" href="index.html" aria-label="Kembali ke Profil"><svg class="i" aria-hidden="true"><use href="#i-back"/></svg></a>
+        <div class="appbar__text">
+          <h1>Dashboard Admin</h1>
+          <p>Ringkasan RT 01/RW 02</p>
+        </div>
+      </header>
+
+      <div class="stack stack--plain">
+        <div class="greeting">
+          <div class="greeting__avatar" aria-hidden="true"></div>
+          <div>
+            <p class="greeting__title" id="greeting">Selamat pagi, Pak Budi</p>
+            <p class="greeting__sub">Administrator • 3 Oktober 2026</p>
+          </div>
+        </div>
+
+        <div>
+          <div class="row-between">
+            <h2 class="section-title">Ringkasan</h2>
+            <span class="swipe-hint">Geser untuk melihat →</span>
+          </div>
+          <div class="stats" tabindex="0" aria-label="Kartu ringkasan, dapat digeser">
+            <article class="stat">
+              <div class="stat__top"><span>Saldo Kas</span><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg></div>
+              <p class="stat__value">Rp 5 jt</p>
+              <p class="stat__note stat__note--up">+8% bulan ini</p>
+            </article>
+            <article class="stat">
+              <div class="stat__top"><span>Barang Dipinjam</span><svg class="i" aria-hidden="true"><use href="#i-box"/></svg></div>
+              <p class="stat__value">7</p>
+              <p class="stat__note">3 kembali pekan ini</p>
+            </article>
+            <article class="stat">
+              <div class="stat__top"><span>Iuran Terkumpul</span><svg class="i" aria-hidden="true"><use href="#i-receipt"/></svg></div>
+              <p class="stat__value">86%</p>
+              <p class="stat__note">43 dari 50 warga</p>
+            </article>
+          </div>
+        </div>
+
+        <div>
+          <div class="row-between">
+            <h2 class="section-title">Aktivitas Terbaru</h2>
+            <a class="link-btn" href="aktivitas-terbaru.html">Lihat semua</a>
+          </div>
+          <ul class="activity" id="activity-list"></ul>
+        </div>
+
+        <nav class="quick" aria-label="Menu admin">
+          <a class="quick__item" id="btn-persetujuan" href="approval-peminjaman.html">
+            <span class="quick__icon"><svg class="i" aria-hidden="true"><use href="#i-clipboard"/></svg><span class="quick__count" id="pending-count" hidden>0</span></span>
+            <span>Approval Peminjaman</span>
+          </a>
+          <a class="quick__item" href="manajemen-keuangan.html">
+            <span class="quick__icon"><svg class="i" aria-hidden="true"><use href="#i-receipt"/></svg></span>
+            <span>Manajemen Keuangan</span>
+          </a>
+          <a class="quick__item" href="data-warga.html">
+            <span class="quick__icon"><svg class="i" aria-hidden="true"><use href="#i-users"/></svg></span>
+            <span>Data Warga &amp; Keluarga</span>
+          </a>
+        </nav>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>
