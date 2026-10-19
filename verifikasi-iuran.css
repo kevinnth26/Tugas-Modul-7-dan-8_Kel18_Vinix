@@ -1,0 +1,77 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+body { background-color: #E5E7EB; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 1rem 0; }
+
+.mobile-wrapper { 
+    width: 100%; max-width: 400px; background-color: #F3F4F6; display: flex; flex-direction: column; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative; 
+}
+@media (min-width: 480px) {
+    .mobile-wrapper { height: 95vh; max-height: 850px; border-radius: 24px; overflow: hidden; }
+}
+@media (max-width: 479px) {
+    .mobile-wrapper { min-height: 100vh; border-radius: 0; } body { padding: 0; }
+}
+
+.content-area { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 1.25rem; background-color: #F9FAFB; }
+
+/* Header */
+.header { display: flex; align-items: center; gap: 15px; padding: 2rem 1.5rem 1rem 1.5rem; background: white; }
+.back-btn { display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; }
+.header-text h1 { font-size: 1.15rem; font-weight: 700; color: #111827; }
+.divider { border: 0; height: 1px; background: #E5E7EB; }
+
+/* Filter Section */
+.filter-section { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.filter-section h2 { font-size: 0.95rem; font-weight: 700; color: #111827; }
+.dropdown-filter { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; font-weight: 600; color: #374151; background: white; padding: 6px 10px; border-radius: 8px; border: 1px solid #D1D5DB; cursor: pointer; }
+
+/* Iuran List & Cards */
+.iuran-list { display: flex; flex-direction: column; gap: 10px; }
+.iuran-card { background: white; border-radius: 12px; padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; border: 1px solid #E5E7EB; box-shadow: 0 2px 4px rgba(0,0,0,0.02); cursor: pointer; transition: 0.1s; }
+.iuran-card:hover { border-color: #9CA3AF; }
+
+.iuran-left { display: flex; align-items: center; gap: 10px; }
+.check-icon-box { width: 26px; height: 26px; border-radius: 50%; background-color: #059669; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.iuran-detail h3 { font-size: 0.85rem; font-weight: 600; color: #111827; margin-bottom: 2px; }
+.iuran-detail p { font-size: 0.68rem; color: #6B7280; }
+
+.iuran-right { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+.status-badge { font-size: 0.6rem; font-weight: 600; color: #B45309; background-color: #FEF3C7; padding: 2px 8px; border-radius: 10px; }
+.nominal { font-size: 0.8rem; font-weight: 700; color: #059669; }
+
+/* Modal Overlays */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); display: none; justify-content: center; align-items: center; z-index: 1000; padding: 1rem; }
+.modal-overlay.active { display: flex; }
+
+/* Modal Card Detail */
+.modal-card { background: white; width: 100%; max-width: 360px; border-radius: 16px; padding: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; }
+.modal-header-info h4 { font-size: 0.95rem; font-weight: 700; color: #111827; }
+.modal-header-info p { font-size: 0.7rem; color: #6B7280; margin-bottom: 12px; }
+.modal-header-info { border-bottom: 1px solid #E5E7EB; padding-bottom: 8px; }
+
+.transfer-success-box { text-align: center; padding: 14px 0; border-bottom: 1px solid #E5E7EB; }
+.big-check-icon { width: 44px; height: 44px; border-radius: 50%; background-color: #059669; display: flex; align-items: center; justify-content: center; margin: 0 auto 6px auto; }
+.big-check-icon.red-bg { background-color: #DC2626; }
+.transfer-success-box h5 { font-size: 0.75rem; color: #6B7280; font-weight: 500; }
+.transfer-success-box h3 { font-size: 1.15rem; font-weight: 700; color: #111827; margin-top: 2px; }
+
+.modal-details-table { padding: 10px 0; border-bottom: 1px solid #E5E7EB; display: flex; flex-direction: column; gap: 8px; }
+.modal-details-table .row { display: flex; justify-content: space-between; font-size: 0.75rem; }
+.modal-details-table .row span { color: #6B7280; }
+.modal-details-table .row strong { color: #111827; font-weight: 600; text-align: right; }
+
+.modal-action-buttons { display: flex; gap: 10px; margin-top: 14px; }
+.btn-tolak { flex: 1; background-color: #DC2626; color: white; border: none; padding: 10px; border-radius: 10px; font-size: 0.8rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.btn-sah { flex: 1; background-color: #059669; color: white; border: none; padding: 10px; border-radius: 10px; font-size: 0.8rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+/* Small Popup Cards */
+.modal-popup-small { background: white; width: 100%; max-width: 320px; border-radius: 20px; padding: 24px 20px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+.modal-popup-small h4 { font-size: 1rem; font-weight: 700; color: #111827; margin: 10px 0 16px 0; line-height: 1.3; }
+
+.success-info-box { background: #F9FAFB; border-radius: 10px; padding: 10px; margin-bottom: 16px; text-align: left; display: flex; flex-direction: column; gap: 6px; border: 1px solid #E5E7EB; }
+.success-info-box .row { display: flex; justify-content: space-between; font-size: 0.72rem; }
+.success-info-box .row span { color: #6B7280; }
+.success-info-box .row strong { color: #111827; font-weight: 600; }
+
+.btn-lanjut { width: 100%; background-color: #1A365D; color: white; border: none; padding: 12px; border-radius: 12px; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+.btn-lanjut:hover { background-color: #2D3748; }

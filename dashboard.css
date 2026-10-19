@@ -1,0 +1,86 @@
+.greeting {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--navy-700); color: #fff; border-radius: 16px; padding: 18px 16px;
+}
+.greeting__avatar { width: 40px; height: 40px; border-radius: 50%; background: #fff; flex: none; }
+.greeting__title { font-size: 16px; font-weight: 700; }
+.greeting__sub { font-size: 12.5px; color: var(--line); margin-top: 2px; }
+
+.swipe-hint { font-size: 12px; color: var(--muted); }
+.link-btn { font-size: 13px; font-weight: 700; color: var(--navy-700); padding: 4px 0; }
+.link-btn:hover { text-decoration: underline; }
+
+.stats {
+  display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x proximity; scroll-padding-left: 24px;
+  margin: 0 -24px; padding: 2px 24px 8px; scrollbar-width: none;
+}
+.stats::-webkit-scrollbar { display: none; }
+.stat {
+  flex: 0 0 calc(50% - 6px); min-width: 160px; scroll-snap-align: start;
+  background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px;
+}
+.stat__top { display: flex; align-items: center; justify-content: space-between; font-size: 13px; color: var(--muted); font-weight: 500; }
+.stat__top .i { color: var(--navy-700); width: 18px; height: 18px; }
+.stat__value { font-size: 26px; font-weight: 800; margin-top: 10px; line-height: 1.1; }
+.stat__note { font-size: 12px; color: var(--navy-700); margin-top: 8px; font-weight: 500; }
+.stat__note--up { color: var(--green); }
+
+.activity { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 6px 16px; }
+.activity li {
+  display: flex; align-items: center; gap: 12px; padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.activity li:last-child { border-bottom: 0; }
+.activity__ini {
+  width: 40px; height: 40px; border-radius: 50%; flex: none;
+  background: var(--chip); color: var(--navy-900);
+  display: grid; place-items: center; font-size: 12px; font-weight: 700;
+}
+.activity__body { flex: 1; min-width: 0; }
+.activity__name { font-size: 14px; font-weight: 700; }
+.activity__desc, .activity__time { font-size: 12.5px; color: var(--muted); }
+
+.quick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding-top: 4px; margin-top: auto; }
+.quick__item {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  font-size: 12.5px; font-weight: 700; color: var(--navy-900);
+  padding: 10px 4px; border-radius: 12px; text-align: center; line-height: 1.25;
+}
+.quick__item:hover { background: rgba(255, 255, 255, .7); }
+.quick__icon { position: relative; display: inline-grid; place-items: center; }
+.quick__count {
+  position: absolute; top: -8px; right: -12px; min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: 999px; background: var(--red); color: #fff; font-size: 11px; font-weight: 700;
+  display: grid; place-items: center;
+}
+
+
+@media (max-width: 360px) {
+  .stats { margin: 0 -16px; padding-left: 16px; padding-right: 16px; }
+}
+
+/* ---------- Penyesuaian khusus halaman ini (tanpa mengubah file bersama) ---------- */
+.view > .stack { flex: 1; }
+.fab, #drawer-layer { display: none !important; }
+
+/* Bingkai ponsel 393 x 852 (ukuran frame Figma) */
+@media (min-width: 768px) {
+  body { padding: 12px 0; }
+  .app { max-width: 393px; height: min(852px, calc(100dvh - 24px)); min-height: 0; }
+  .app main { min-height: 0; overflow-y: auto; }
+  /* Menu admin selalu terlihat di dasar bingkai; daftar di atasnya yang digulir. */
+  .quick {
+    position: sticky; bottom: 0; z-index: 3;
+    margin: auto -24px -40px; padding: 8px 24px 12px;
+    background: var(--bg); border-top: 1px solid var(--line);
+  }
+}
+@media (min-width: 1100px) {
+  .app { max-width: 393px; }
+}
+@media (min-width: 768px) and (max-height: 800px) {
+  .appbar { padding-top: 12px; padding-bottom: 12px; }
+  .view > .stack { padding-top: 16px; padding-bottom: 16px; gap: 14px; }
+  .greeting { padding: 14px 16px; }
+  .activity li { padding: 9px 0; }
+}

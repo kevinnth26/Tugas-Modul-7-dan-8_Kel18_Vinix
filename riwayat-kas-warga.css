@@ -1,0 +1,38 @@
+.select-wrap { position: relative; display: inline-flex; align-items: center; }
+.select {
+  appearance: none; -webkit-appearance: none;
+  height: 32px; padding: 0 30px 0 12px; border-radius: 10px;
+  background: #fff; border: 1px solid var(--line);
+  font-size: 13.5px; font-weight: 500; color: var(--navy-700); cursor: pointer;
+}
+.select-wrap .i { position: absolute; right: 8px; width: 14px; height: 14px; transform: rotate(90deg); pointer-events: none; color: var(--navy-700); }
+
+.tx { background: #fff; border-radius: 16px; box-shadow: var(--shadow); border: 1px solid var(--line); overflow: hidden; }
+.tx li { display: flex; align-items: center; gap: 12px; padding: 12px; border-bottom: 1px solid var(--line); }
+.tx li:last-child { border-bottom: 0; }
+.tx__ico { width: 36px; height: 36px; border-radius: 8px; flex: none; display: grid; place-items: center; }
+.tx__ico .i { width: 18px; height: 18px; stroke-width: 2.2; }
+.tx__ico--in { background: var(--green-bg); color: var(--green); }
+.tx__ico--out { background: var(--red-bg); color: var(--red); }
+.tx__main { flex: 1; min-width: 0; }
+.tx__title { font-size: 14px; font-weight: 700; line-height: 1.25; }
+.tx__meta { font-size: 10.5px; color: var(--muted); margin-top: 2px; }
+.tx__side { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+.tx__side .pill { padding: 2px 9px; font-size: 10px; }
+.tx__amt { font-size: 14px; font-weight: 700; white-space: nowrap; }
+.tx__amt--in { color: var(--green); }
+.tx__amt--out { color: var(--red); }
+.empty { text-align: center; color: var(--muted); padding: 32px 16px; font-size: 14px; }
+
+/* ---------- Penyesuaian khusus halaman ini (tanpa mengubah file bersama) ---------- */
+.fab, #drawer-layer { display: none !important; }
+
+/* Bingkai ponsel 393 x 852 (ukuran frame Figma)*/
+@media (min-width: 768px) {
+  body { padding: 12px 0; }
+  .app { max-width: 393px; height: min(852px, calc(100dvh - 24px)); min-height: 0; }
+  .app main { min-height: 0; overflow-y: auto; }
+}
+@media (min-width: 1100px) {
+  .app { max-width: 393px; }
+}

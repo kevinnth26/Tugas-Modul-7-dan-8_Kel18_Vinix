@@ -1,0 +1,73 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+body { background-color: #E5E7EB; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 1rem 0; }
+
+.mobile-wrapper { 
+    width: 100%; max-width: 400px; background-color: #F3F4F6; display: flex; flex-direction: column; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative; 
+}
+@media (min-width: 480px) {
+    .mobile-wrapper { height: 95vh; max-height: 850px; border-radius: 24px; overflow: hidden; }
+}
+@media (max-width: 479px) {
+    .mobile-wrapper { min-height: 100vh; border-radius: 0; } body { padding: 0; }
+}
+
+.content-area { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 1.5rem; background-color: #F9FAFB; }
+
+/* Header */
+.header { display: flex; align-items: center; gap: 15px; padding: 2rem 1.5rem 1rem 1.5rem; background: white; }
+.back-btn { display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; }
+.header-text h1 { font-size: 1.25rem; font-weight: 700; color: #111827; margin-bottom: 2px; }
+.header-text p { font-size: 0.75rem; color: #6B7280; }
+.divider { border: 0; height: 1px; background: #E5E7EB; }
+
+/* Tabs */
+.tabs { display: flex; gap: 8px; margin-bottom: 1.25rem; background-color: #E5E7EB; padding: 4px; border-radius: 12px; }
+.tab-pill { flex: 1; padding: 8px 10px; border-radius: 8px; font-size: 0.75rem; font-weight: 600; text-decoration: none; color: #4B5563; border: none; background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: 0.2s; }
+.tab-pill.active { background-color: #FFFFFF; color: #1A365D; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+
+.badge-count { background-color: #D1D5DB; color: #374151; font-size: 0.65rem; padding: 2px 6px; border-radius: 10px; }
+.tab-pill.active .badge-count { background-color: #1A365D; color: #FFFFFF; }
+
+/* Section Header */
+.section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.section-header h2 { font-size: 0.95rem; font-weight: 700; color: #111827; }
+.request-tag { font-size: 0.7rem; font-weight: 600; color: #B45309; background-color: #FEF3C7; padding: 3px 8px; border-radius: 20px; }
+
+/* Cards */
+.card-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 1.5rem; }
+.approval-card { background: white; border-radius: 12px; padding: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.04); border: 1px solid #E5E7EB; }
+.card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.user-info { display: flex; align-items: center; gap: 10px; }
+.avatar { width: 32px; height: 32px; border-radius: 50%; background-color: #E5E7EB; color: #1A365D; font-weight: 700; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; }
+.user-detail h3 { font-size: 0.85rem; font-weight: 600; color: #111827; }
+.user-detail p { font-size: 0.7rem; color: #6B7280; }
+
+.status-badge { font-size: 0.65rem; font-weight: 600; padding: 3px 8px; border-radius: 12px; }
+.status-badge.menunggu { background-color: #FEF3C7; color: #B45309; }
+.status-badge.diterima { background-color: #D1FAE5; color: #065F46; }
+.status-badge.ditolak { background-color: #FEE2E2; color: #991B1B; }
+
+/* Kotak Info & Ikon SVG */
+.card-body-info { background-color: #F1F5F9; border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; font-size: 0.8rem; }
+.info-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; color: #1E293B; }
+.info-row:last-of-type { color: #475569; font-size: 0.75rem; }
+.info-icon-svg { flex-shrink: 0; color: #1A365D; }
+.info-desc { font-size: 0.75rem; color: #64748B; font-style: italic; border-top: 1px dashed #CBD5E1; padding-top: 6px; margin-top: 4px; padding-left: 26px; }
+
+.card-actions { display: flex; gap: 8px; }
+.btn-action { flex: 1; padding: 8px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; text-align: center; }
+.btn-reject { background-color: #FFFFFF; border: 1px solid #DC2626; color: #DC2626; }
+.btn-reject:hover { background-color: #FEF2F2; }
+.btn-approve { background-color: #059669; border: 1px solid #059669; color: #FFFFFF; }
+.btn-approve:hover { opacity: 0.9; }
+
+.empty-state { text-align: center; padding: 2rem; color: #6B7280; font-size: 0.85rem; }
+
+/* Footer Note dengan Ikon Info Melingkar yang Jelas */
+.footer-note { display: flex; align-items: center; gap: 10px; color: #1E293B; font-size: 0.75rem; padding: 0 4px; line-height: 1.4; }
+.info-circle-svg { flex-shrink: 0; color: #1A365D; }
+
+/* Toast */
+.toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background-color: #1A365D; color: #FFFFFF; padding: 10px 16px; border-radius: 20px; font-size: 0.8rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: transform 0.3s ease; z-index: 1000; }
+.toast.show { transform: translateX(-50%) translateY(0); }

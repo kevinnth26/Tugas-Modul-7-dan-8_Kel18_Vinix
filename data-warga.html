@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Warga - Admin</title>
+    <link rel="stylesheet" href="data-warga.css">
+</head>
+<body>
+    <div class="mobile-wrapper">
+        <!-- Header -->
+        <div class="header">
+            <a href="dashboard.html" class="back-btn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A365D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </a>
+            <div class="header-text">
+                <h1>Data Warga</h1>
+                <p>Data Warga RT 01/RW 02</p>
+            </div>
+        </div>
+        <hr class="divider">
+
+        <div class="content-area">
+            <!-- Search Bar -->
+            <div class="search-container">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="searchInput" class="search-input" placeholder="Cari nama, alamat, atau nomor HP..." onkeyup="filterWarga()">
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-number">86</div>
+                    <div class="stat-label">Total warga</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">32</div>
+                    <div class="stat-label">Kepala keluarga</div>
+                </div>
+            </div>
+
+            <!-- Section Title -->
+            <div class="section-header">
+                <h2>Daftar warga</h2>
+                <span class="sort-text">Nama A–Z ▾</span>
+            </div>
+
+            <!-- List Warga Lengkap (7 Warga) -->
+            <div class="warga-list" id="wargaList">
+                <!-- 1. Andi Pratama -->
+                <div class="warga-card" onclick="window.location.href='data-keluarga.html?id=andi'">
+                    <div class="avatar">AP</div>
+                    <div class="warga-info">
+                        <h3>Andi Pratama</h3>
+                        <p>Jl. Garuda VI No. 31 • 4 Anggota</p>
+                        <span class="phone">0821 3184 3044</span>
+                    </div>
+                </div>
+
+                <!-- 2. Bambang Susanto -->
+                <div class="warga-card" onclick="window.location.href='data-keluarga.html?id=bambang'">
+                    <div class="avatar">BS</div>
+                    <div class="warga-info">
+                        <h3>Bambang Susanto</h3>
+                        <p>Jl. Garuda VII No. 12 • 3 Anggota</p>
+                        <span class="phone">0812 8841 2330</span>
+                    </div>
+                </div>
+
+                <!-- 3. Dewi Ningsih -->
+                <div class="warga-card" onclick="window.location.href='data-keluarga.html?id=dewi'">
+                    <div class="avatar">DN</div>
+                    <div class="warga-info">
+                        <h3>Dewi Ningsih</h3>
+                        <p>Jl. Merdeka VI No. 21 • 2 Anggota</p>
+                        <span class="phone">0812 7712 3401</span>
+                    </div>
+                </div>
+
+                <!-- 4. Fajar Aditya -->
+                <div class="warga-card" onclick="window.location.href='data-keluarga.html?id=fajar'">
+                    <div class="avatar">FA</div>
+                    <div class="warga-info">
+                        <h3>Fajar Aditya</h3>
+                        <p>Jl. Garuda VI No. 16 • 2 Anggota</p>
+                        <span class="phone">0813 4120 0892</span>
+                    </div>
+                </div>
+
+                <!-- 5. Siti Rahma -->
+                <div class="warga-card" onclick="window.location.href='data-keluarga.html?id=siti'">
+                    <div class="avatar">SR</div>
+                    <div class="warga-info">
+                        <h3>Siti Rahma</h3>
+                        <p>Jl. Merdeka VII No. 16 • 2 Anggota</p>
+                        <span class="phone">0888 0563 7589</span>
+                    </div>
+                </div>
+
+                <!-- 6. Yani Kurniawan -->
+                <div class="warga-card" onclick="window.location.href='data-keluarga.html?id=yani'">
+                    <div class="avatar">YK</div>
+                    <div class="warga-info">
+                        <h3>Yani Kurniawan</h3>
+                        <p>Jl. Garuda VI No. 14 • 4 Anggota</p>
+                        <span class="phone">0813 2245 6701</span>
+                    </div>
+                </div>
+
+                <!-- 7. Wawan Wirhayu -->
+                <div class="warga-card" onclick="window.location.href='data-keluarga.html?id=wawan'">
+                    <div class="avatar">WW</div>
+                    <div class="warga-info">
+                        <h3>Wawan Wirhayu</h3>
+                        <p>Jl. Garuda V No. 08 • 3 Anggota</p>
+                        <span class="phone">0812 9987 1122</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 40px;"></div>
+        </div>
+    </div>
+    <script src="data-warga.js"></script>
+</body>
+</html>

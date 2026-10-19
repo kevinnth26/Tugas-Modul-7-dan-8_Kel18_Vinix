@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1f3a">
+  <title>Bayar Iuran – RuangWarga</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="bayar-iuran.css">
+  <script src="common.js" defer></script>
+  <script src="bayar-iuran.js" defer></script>
+</head>
+<body>
+
+<div class="app" id="app">
+  <main id="main">
+
+    <section class="view" aria-label="Bayar Iuran">
+      <header class="appbar">
+        <a class="appbar__back" href="index.html" aria-label="Kembali ke Profil"><svg class="i" aria-hidden="true"><use href="#i-back"/></svg></a>
+        <div class="appbar__text">
+          <h1>Bayar Iuran</h1>
+          <p>Konfirmasi Pembayaran Warga</p>
+        </div>
+      </header>
+
+      <form class="stack stack--plain" id="form-iuran" novalidate>
+        <article class="bill">
+          <div class="bill__top">
+            <span>Tagihan Aktif</span>
+            <span class="pill" id="iuran-status">Belum Dibayar</span>
+          </div>
+          <p class="bill__name">Iuran RT - September 2026</p>
+          <p class="bill__amount">Rp 150.000</p>
+          <p class="bill__due">Batas Pembayaran 10 Oktober 2026</p>
+        </article>
+
+        <div class="bank">
+          <span class="bank__logo"><svg class="i" aria-hidden="true"><use href="#i-bank"/></svg></span>
+          <div class="bank__text">
+            <small>Rekening Tujuan</small>
+            <strong>BJB - Haryanto Wijaya</strong>
+            <span class="bank__no" id="bank-no">0021 8834 591</span>
+          </div>
+          <button type="button" class="bank__copy" id="btn-copy" aria-label="Salin nomor rekening"><svg class="i" aria-hidden="true"><use href="#i-copy"/></svg></button>
+        </div>
+
+        <div class="field">
+          <label for="i-nominal">Nominal</label>
+          <input id="i-nominal" class="input" type="text" inputmode="numeric" value="Rp 150.000" autocomplete="off">
+          <p class="error" id="err-nominal" role="alert"></p>
+        </div>
+
+        <div class="field">
+          <label id="i-bukti-label">Bukti Pembayaran</label>
+          <input type="file" id="i-bukti" accept="image/jpeg,image/png,application/pdf" hidden>
+          <button type="button" class="dropzone dropzone--lg" id="i-drop" aria-labelledby="i-bukti-label">
+            <svg class="i dropzone__icon" aria-hidden="true"><use href="#i-upload"/></svg>
+            <strong id="i-drop-title">Upload Bukti Transfer (Max 2MB)</strong>
+            <small id="i-drop-sub">JPG, PNG, atau PDF</small>
+          </button>
+          <p class="error" id="err-bukti" role="alert"></p>
+        </div>
+
+        <p class="note">
+          <svg class="i" aria-hidden="true"><use href="#i-info"/></svg>
+          <span>Konfirmasi akan diverifikasi pengurus maksimal 1 x 24 jam</span>
+        </p>
+
+        <button type="submit" class="btn btn--primary btn--icon" id="btn-kirim-iuran">
+          <svg class="i" aria-hidden="true"><use href="#i-send"/></svg><span id="btn-kirim-label">Kirim Konfirmasi</span>
+        </button>
+      </form>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>
