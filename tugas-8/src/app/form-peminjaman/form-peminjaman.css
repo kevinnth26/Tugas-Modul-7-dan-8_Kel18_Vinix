@@ -1,0 +1,94 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+body { background-color: #E5E7EB; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 1rem 0; }
+
+.mobile-wrapper { 
+    width: 100%; max-width: 400px; background-color: #F3F4F6; display: flex; flex-direction: column; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative; 
+}
+@media (min-width: 480px) {
+    .mobile-wrapper { height: 95vh; max-height: 850px; border-radius: 24px; overflow: hidden; }
+}
+@media (max-width: 479px) {
+    .mobile-wrapper { min-height: 100vh; border-radius: 0; } body { padding: 0; }
+}
+
+.content-area { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 1.25rem; background-color: #F9FAFB; }
+
+/* Header */
+.header { display: flex; align-items: center; gap: 15px; padding: 2rem 1.25rem 1rem 1.25rem; background: white; }
+.back-btn { display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; }
+.header-text h1 { font-size: 1.25rem; font-weight: 700; color: #111827; margin-bottom: 2px; }
+.header-text p { font-size: 0.75rem; color: #6B7280; }
+.divider { border: 0; height: 1px; background: #E5E7EB; }
+
+/* Card Aset Dipilih */
+.asset-card { 
+    background: white; border-radius: 16px; padding: 1rem; display: flex; gap: 12px; align-items: center; 
+    border: 1px solid #E5E7EB; box-shadow: 0 2px 6px rgba(0,0,0,0.03); margin-bottom: 1.25rem; 
+}
+.asset-img { width: 70px; height: 70px; object-fit: cover; border-radius: 10px; background-color: #E5E7EB; }
+.asset-info { display: flex; flex-direction: column; gap: 4px; }
+.asset-label { font-size: 0.7rem; color: #6B7280; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+.asset-info h2 { font-size: 1rem; font-weight: 700; color: #111827; }
+.badge { font-size: 0.7rem; font-weight: 600; padding: 3px 8px; border-radius: 6px; width: fit-content; }
+.text-green { background-color: #D1FAE5; color: #065F46; }
+
+/* Form Group & Inputs */
+.date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem; }
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; font-size: 0.75rem; font-weight: 600; color: #374151; margin-bottom: 6px; }
+
+.input-icon-wrapper { position: relative; }
+.input-icon { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+.input-icon-wrapper input { 
+    width: 100%; padding: 10px 10px 10px 36px; border: 1px solid #D1D5DB; border-radius: 10px; 
+    font-size: 0.825rem; outline: none; background: white; font-weight: 500; color: #111827; 
+}
+.input-icon-wrapper input:focus, textarea:focus { border-color: #1A365D; }
+
+textarea { 
+    width: 100%; padding: 10px 12px; border: 1px solid #D1D5DB; border-radius: 10px; 
+    font-size: 0.85rem; outline: none; background: white; font-weight: 500; color: #111827; resize: none; 
+}
+
+/* Submit Button & Info */
+.btn-submit { 
+    width: 100%; padding: 12px; background-color: #1A365D; color: white; border: none; 
+    border-radius: 10px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: background 0.2s; 
+    margin-bottom: 1.25rem; 
+}
+.btn-submit:hover { background-color: #102A43; }
+
+.info-box { display: flex; gap: 8px; align-items: flex-start; background: transparent; padding: 0 4px; }
+.info-box p { font-size: 0.7rem; color: #6B7280; line-height: 1.4; }
+
+/* Status Ticket (Kupon Kuning / Amber) */
+.status-ticket { 
+    background-color: #FEF3C7; border: 1px solid #FCD34D; border-radius: 16px; padding: 1rem; 
+    margin-top: 0.5rem; color: #78350F; animation: fadeIn 0.3s ease-in-out; 
+}
+.ticket-header { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 12px; }
+.clock-icon { color: #B45309; flex-shrink: 0; margin-top: 2px; }
+.ticket-header h3 { font-size: 0.95rem; font-weight: 700; color: #92400E; }
+.ticket-header .subtext { font-size: 0.7rem; color: #B45309; margin-top: 2px; }
+
+.ticket-details { 
+    display: flex; justify-content: space-between; border-top: 1px dashed #F59E0B; padding-top: 10px; 
+    margin-top: 8px; 
+}
+.detail-label { font-size: 0.65rem; color: #B45309; text-transform: uppercase; font-weight: 600; }
+.detail-val { font-size: 0.8rem; font-weight: 700; color: #78350F; }
+.text-right { text-align: right; }
+
+.hidden { display: none !important; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Bottom Navigation */
+.bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 0.75rem 0 1.5rem 0; border-top: 1px solid #E5E7EB; box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
+.nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: #9CA3AF; }
+.nav-item span { font-size: 0.75rem; font-weight: 500; }
+.nav-item.active { color: #1A365D; }

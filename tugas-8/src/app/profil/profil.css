@@ -1,0 +1,207 @@
+/* =========================================================
+   1. KERANGKA LAYAR UTAMA (Curved & Centered)
+   ========================================================= */
+body {
+  background-color: #e2e8f0 !important;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app {
+  background-color: #f8fafc !important; /* Warna abu-abu sangat terang */
+  color: #1e293b !important;
+  width: 100%;
+  max-width: 393px !important;
+  height: 852px;
+  max-height: 90vh;
+  margin: 20px auto !important;
+  border-radius: 36px !important; /* Membuat sudut layar HP melengkung */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.app main {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* =========================================================
+   2. HEADER HERO (Biru Dongker)
+   ========================================================= */
+.hero {
+  background: #0F172A; /* Warna Biru Dongker Gelap */
+  color: #fff;
+  padding: 32px 24px 24px;
+  display: flex; 
+  flex-direction: column; 
+  align-items: center;
+}
+.hero__title { 
+  align-self: flex-start; 
+  font-size: 22px; 
+  font-weight: 700; 
+  margin: 0;
+}
+.avatar {
+  margin-top: 20px; 
+  width: 72px; 
+  height: 72px; 
+  border-radius: 50%;
+  background: #fff; 
+  color: #0F172A;
+  display: grid; 
+  place-items: center; 
+  font-size: 28px; 
+  font-weight: 800;
+}
+.hero__name { 
+  margin-top: 14px; 
+  margin-bottom: 0;
+  font-size: 20px; 
+  font-weight: 700; 
+  text-align: center; 
+}
+.badge-verified {
+  margin-top: 12px; 
+  display: inline-flex; 
+  align-items: center; 
+  gap: 6px;
+  background: #d1fae5; /* Background Hijau Transparan */
+  color: #059669; /* Teks Hijau Tua */
+  border-radius: 999px; 
+  padding: 6px 14px; 
+  font-size: 12px; 
+  font-weight: 700;
+}
+
+/* =========================================================
+   3. KONTEN BAWAH (Menu Kelola Akun)
+   ========================================================= */
+.sheet { 
+  padding: 24px; 
+  display: flex; 
+  flex-direction: column; 
+  gap: 14px; 
+  flex: 1; 
+}
+.sheet__title { 
+  font-size: 20px; 
+  font-weight: 700; 
+  margin: 0 0 4px 0; 
+  color: #0F172A;
+}
+.lead {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 0 8px 0;
+  line-height: 1.4;
+}
+
+.menu-card {
+  width: 100%; 
+  text-align: left;
+  display: flex; 
+  align-items: center; 
+  gap: 16px;
+  background: #fff; 
+  border: 1px solid #e2e8f0; 
+  border-radius: 14px;
+  padding: 16px; 
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+  text-decoration: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.menu-card__icon {
+  width: 44px; 
+  height: 44px; 
+  flex: none; 
+  border-radius: 12px;
+  background: #f1f5f9; 
+  color: #475569;
+  display: grid; 
+  place-items: center;
+}
+.menu-card__text { 
+  flex: 1; 
+  display: flex; 
+  flex-direction: column; 
+}
+.menu-card__text strong { 
+  font-size: 15px; 
+  font-weight: 700; 
+  color: #0F172A;
+}
+.menu-card__text small { 
+  font-size: 12.5px; 
+  color: #64748b; 
+  margin-top: 2px; 
+}
+.menu-card__chev { 
+  color: #0F172A; 
+}
+
+/* Khusus Tombol Sign Out (Merah) */
+.menu-card--danger { 
+  border: 1.5px solid #ef4444; 
+}
+.menu-card--danger .menu-card__icon { 
+  background: #fee2e2; 
+  color: #ef4444; 
+}
+.menu-card--danger strong, .menu-card--danger .menu-card__chev { 
+  color: #ef4444; 
+}
+.menu-card--danger small { 
+  color: #94a3b8; 
+}
+
+.hint {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 8px;
+  align-items: flex-start;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   4. NAVIGASI BAWAH (Tabbar)
+   ========================================================= */
+.tabbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: #fff;
+  border-top: 1px solid #e2e8f0;
+  padding: 12px 0 24px 0; /* Padding ekstra di bawah untuk area lengkungan */
+  flex-shrink: 0;
+}
+.tabbar__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 600;
+}
+.tabbar__item[aria-current="page"] {
+  color: #0F172A;
+}

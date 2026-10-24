@@ -1,0 +1,179 @@
+/* =========================================================
+   1. PENGATURAN LAYAR UTAMA (Desktop & Kerangka HP Curved)
+   ========================================================= */
+body {
+  background-color: #e2e8f0 !important;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app {
+  background-color: #f8fafc !important;
+  color: #1e293b !important;
+  width: 100%;
+  max-width: 393px !important;
+  height: 852px;
+  max-height: 90vh;
+  margin: 20px auto !important;
+  border-radius: 36px !important; 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.app main {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   2. HEADER / APPBAR
+   ========================================================= */
+.appbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.appbar__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #1e293b;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+.appbar__text h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  color: #1A365D;
+}
+
+/* =========================================================
+   3. UTILITIES & FILTER BULAN
+   ========================================================= */
+.row-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1A365D;
+  margin: 0;
+}
+.sr-only { display: none; }
+
+.select-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding-right: 8px;
+}
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 32px;
+  padding: 0 24px 0 12px;
+  background: transparent;
+  border: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #1A365D;
+  cursor: pointer;
+  outline: none;
+}
+.select-wrap .i {
+  position: absolute;
+  right: 8px;
+  width: 16px;
+  height: 16px;
+  pointer-events: none;
+  color: #1A365D;
+}
+
+/* =========================================================
+   4. LIST RIWAYAT KAS (CARD)
+   ========================================================= */
+.tx {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.tx li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.tx li:last-child {
+  border-bottom: 0;
+}
+
+.tx__ico {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  flex: none;
+  display: grid;
+  place-items: center;
+}
+.tx__ico--in { background: #d1fae5; color: #10B981; }
+.tx__ico--out { background: #fee2e2; color: #EF4444; }
+
+.tx__main { flex: 1; min-width: 0; }
+.tx__title { font-size: 15px; font-weight: 700; color: #1e293b; margin: 0 0 4px 0; }
+.tx__meta { font-size: 12px; color: #64748b; margin: 0; }
+
+.tx__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+/* Status Pill */
+.pill {
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 12px;
+}
+.pill--red { background: #fee2e2; color: #EF4444; }
+.pill--yellow { background: #fef3c7; color: #d97706; }
+.pill--green { background: #d1fae5; color: #10B981; }
+
+.tx__amt { font-size: 15px; font-weight: 800; white-space: nowrap; }
+.tx__amt--in { color: #10B981; }
+.tx__amt--out { color: #EF4444; }
