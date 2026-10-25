@@ -1,0 +1,196 @@
+/* =========================================================
+   1. KERANGKA LAYAR UTAMA (Curved & Centered)
+   ========================================================= */
+body {
+  background-color: #e2e8f0 !important;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app {
+  background-color: #f8fafc !important; /* Warna abu-abu sangat terang */
+  color: #1e293b !important;
+  width: 100%;
+  max-width: 393px !important;
+  height: 852px;
+  max-height: 90vh;
+  margin: 20px auto !important;
+  border-radius: 36px !important; 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.app main {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   2. HEADER / APPBAR
+   ========================================================= */
+.appbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.appbar__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #1A365D;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+.appbar__text h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #1A365D;
+}
+.appbar__text p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* =========================================================
+   3. LAYOUT FORM & KARTU (CARDS)
+   ========================================================= */
+.stack {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+}
+
+.card {
+  background: #ffffff; 
+  border: none; 
+  border-radius: 20px;
+  padding: 20px 16px; 
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  display: flex; 
+  flex-direction: column; 
+  gap: 16px; 
+  margin: 0;
+}
+.card__title { 
+  font-size: 16.5px; 
+  font-weight: 700; 
+  color: #1A365D;
+  padding: 0; 
+  margin: 0; 
+}
+.card__sub { 
+  font-size: 12.5px; 
+  color: #64748b; 
+  margin: -10px 0 4px 0; 
+  line-height: 1.4;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.field label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1A365D;
+}
+
+/* =========================================================
+   4. INPUT TEXT & TOGGLE PASSWORD
+   ========================================================= */
+.input-wrap {
+  display: flex; 
+  align-items: center; 
+  gap: 12px;
+  height: 48px; 
+  padding: 0 14px;
+  background: #ffffff; 
+  border: 1.5px solid #cbd5e1; 
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+.input-wrap:focus-within { 
+  border-color: #1A365D;
+  box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.15); 
+}
+.input-wrap__lead { 
+  color: #64748b; 
+  flex-shrink: 0;
+}
+.input-wrap input { 
+  flex: 1; 
+  min-width: 0; 
+  border: 0; 
+  outline: 0; 
+  background: transparent; 
+  font-size: 15px; 
+  color: #1e293b;
+}
+.input-wrap input::placeholder { 
+  color: #94a3b8; 
+}
+.input-wrap__toggle { 
+  color: #1A365D; 
+  width: 36px; 
+  height: 36px; 
+  display: grid; 
+  place-items: center; 
+  border-radius: 8px; 
+  margin-right: -6px; 
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.input-wrap__toggle:hover { 
+  background: #f1f5f9; 
+}
+
+/* =========================================================
+   5. TOMBOL SIMPAN
+   ========================================================= */
+.btn {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 52px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  background-color: #1A365D;
+  color: #ffffff;
+  transition: opacity 0.2s;
+}
+.btn:hover {
+  opacity: 0.9;
+}

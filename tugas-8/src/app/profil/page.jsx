@@ -21,7 +21,7 @@ export default function Profil() {
           {/* Bagian Atas: Profil Hero */}
           <header className="hero">
             <h1 className="hero__title">Profil Saya</h1>
-            <div className="avatar" aria-hidden="true">B</div>
+            <div className="avatar-profil" aria-hidden="true">B</div>
             <p className="hero__name">Budi Santoso</p>
             <span className="badge-verified">
               {/* Icon Shield Verified */}

@@ -51,12 +51,12 @@ export default function Dashboard() {
   </svg>
   <span>Pinjam Aset</span>
 </Link>
-              <button className="action-btn" id="btnAdminPanel">
+              <Link href="/dashboard-admin" className="action-btn" id="btnAdminPanel" style={{ textDecoration: 'none', color: 'inherit' }}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A365D" strokeWidth="2">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
                 <span>Panel Admin</span>
-              </button>
+              </Link>
             </div>
 
             {/* Arus Saldo Kas */}
