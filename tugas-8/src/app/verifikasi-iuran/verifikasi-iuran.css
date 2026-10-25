@@ -1,0 +1,196 @@
+/* =========================================================
+   1. KERANGKA LAYAR UTAMA (Standar)
+   ========================================================= */
+body {
+  background-color: #e2e8f0 !important;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app {
+  background-color: #f8fafc !important; 
+  color: #1e293b !important;
+  width: 100%;
+  max-width: 393px !important;
+  height: 852px;
+  max-height: 90vh;
+  margin: 20px auto !important;
+  border-radius: 36px !important; 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.app main {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.view-verifikasi {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0 24px 24px 24px; 
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   2. HEADER / APPBAR (STICKY)
+   ========================================================= */
+.appbar {
+  position: sticky; 
+  top: 0; 
+  z-index: 50; 
+  background-color: #f8fafc; 
+  margin: 0 -24px 16px -24px; 
+  padding: 24px 24px 16px 24px; 
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8); 
+}
+.appbar__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #1A365D;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+.appbar__text h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #111827;
+}
+
+/* =========================================================
+   3. FILTER SECTION
+   ========================================================= */
+.filter-section { 
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; 
+}
+.filter-section h2 { font-size: 15px; font-weight: 700; color: #111827; margin: 0;}
+.dropdown-filter { 
+  display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; 
+  color: #475569; background: white; padding: 6px 12px; border-radius: 8px; 
+  border: 1px solid #cbd5e1; cursor: pointer; transition: all 0.2s;
+}
+.dropdown-filter:hover { background: #f1f5f9; }
+
+/* =========================================================
+   4. LIST IURAN WARGA
+   ========================================================= */
+.iuran-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;}
+.iuran-card { 
+  background: white; border-radius: 16px; padding: 14px 16px; display: flex; 
+  align-items: center; justify-content: space-between; border: 1px solid #e2e8f0; 
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02); cursor: pointer; transition: border-color 0.2s; 
+}
+.iuran-card:hover { border-color: #1A365D; }
+
+.iuran-left { display: flex; align-items: center; gap: 12px; }
+.check-icon-box { 
+  width: 32px; height: 32px; border-radius: 50%; background-color: #059669; 
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
+}
+.iuran-detail h3 { font-size: 14px; font-weight: 700; color: #111827; margin: 0 0 4px 0; }
+.iuran-detail p { font-size: 11px; color: #64748b; margin: 0;}
+
+.iuran-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.status-badge { 
+  font-size: 10px; font-weight: 700; color: #b45309; background-color: #fef3c7; 
+  padding: 4px 10px; border-radius: 12px; 
+}
+.nominal { font-size: 13px; font-weight: 800; color: #059669; }
+
+/* =========================================================
+   5. MODAL POP-UP (OVERLAY)
+   ========================================================= */
+.modal-overlay { 
+  position: absolute; /* Terkunci di dalam kerangka .app */
+  top: 0; left: 0; width: 100%; height: 100%; 
+  background: rgba(15, 23, 42, 0.6); 
+  display: flex; justify-content: center; align-items: center; 
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s; 
+}
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+/* Modal 1: Detail Bukti Transfer */
+.modal-card { 
+  background: white; width: 85%; max-width: 340px; border-radius: 24px; padding: 24px; 
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2); max-height: 85vh; overflow-y: auto; 
+  transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+.modal-overlay.active .modal-card { transform: translateY(0); }
+
+.modal-header-info { border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 16px;}
+.modal-header-info h4 { font-size: 16px; font-weight: 700; color: #111827; margin: 0 0 4px 0; }
+.modal-header-info p { font-size: 12px; color: #64748b; margin: 0; }
+
+.transfer-success-box { text-align: center; padding-bottom: 16px; border-bottom: 1px solid #e2e8f0; margin-bottom: 16px;}
+.big-check-icon { 
+  width: 56px; height: 56px; border-radius: 50%; background-color: #059669; 
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto; 
+}
+.big-check-icon.red-bg { background-color: #dc2626; }
+.transfer-success-box h5 { font-size: 12px; color: #64748b; font-weight: 600; margin: 0 0 4px 0;}
+.transfer-success-box h3 { font-size: 20px; font-weight: 800; color: #111827; margin: 0; }
+
+.modal-details-table { 
+  display: flex; flex-direction: column; gap: 12px; padding-bottom: 16px; 
+  border-bottom: 1px solid #e2e8f0; margin-bottom: 16px;
+}
+.modal-details-table .row { display: flex; justify-content: space-between; font-size: 12px; }
+.modal-details-table .row span { color: #64748b; }
+.modal-details-table .row strong { color: #111827; font-weight: 700; text-align: right; }
+
+.modal-action-buttons { display: flex; gap: 12px; }
+.btn-tolak { 
+  flex: 1; background-color: #dc2626; color: white; border: none; padding: 12px; 
+  border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; 
+  display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.2s;
+}
+.btn-tolak:hover { opacity: 0.9; }
+.btn-sah { 
+  flex: 1; background-color: #059669; color: white; border: none; padding: 12px; 
+  border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; 
+  display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.2s;
+}
+.btn-sah:hover { opacity: 0.9; }
+
+/* Modal 2: Notifikasi Sukses/Gagal (Kecil) */
+.modal-popup-small { 
+  background: white; width: 85%; max-width: 280px; border-radius: 24px; padding: 24px 20px; 
+  text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+  transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+.modal-overlay.active .modal-popup-small { transform: translateY(0); }
+
+.modal-popup-small h4 { font-size: 16px; font-weight: 700; color: #111827; margin: 0 0 16px 0; line-height: 1.4; }
+
+.success-info-box { 
+  background: #f8fafc; border-radius: 12px; padding: 12px; margin-bottom: 20px; 
+  text-align: left; display: flex; flex-direction: column; gap: 8px; border: 1px solid #e2e8f0; 
+}
+.success-info-box .row { display: flex; justify-content: space-between; font-size: 11.5px; }
+.success-info-box .row span { color: #64748b; }
+.success-info-box .row strong { color: #111827; font-weight: 700; }
+
+.btn-lanjut { 
+  width: 100%; background-color: #1A365D; color: white; border: none; padding: 14px; 
+  border-radius: 12px; font-size: 14px; font-weight: 700; cursor: pointer; transition: opacity 0.2s;
+}
+.btn-lanjut:hover { opacity: 0.9; }

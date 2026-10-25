@@ -1,0 +1,223 @@
+/* =========================================================
+   1. KERANGKA LAYAR UTAMA (Standar)
+   ========================================================= */
+body {
+  background-color: #e2e8f0 !important;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app {
+  background-color: #f8fafc !important; 
+  color: #1e293b !important;
+  width: 100%;
+  max-width: 393px !important;
+  height: 852px;
+  max-height: 90vh;
+  margin: 20px auto !important;
+  border-radius: 36px !important; 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.app main {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.view-keuangan {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0 24px 24px 24px; 
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   2. HEADER / APPBAR (STICKY)
+   ========================================================= */
+.appbar {
+  position: sticky; 
+  top: 0; 
+  z-index: 50; 
+  background-color: #f8fafc; 
+  margin: 0 -24px 16px -24px; 
+  padding: 24px 24px 16px 24px; 
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8); 
+}
+.appbar__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #1A365D;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+.appbar__text h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #111827;
+}
+.appbar__text p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* =========================================================
+   3. ACTION BAR & KARTU RINGKASAN
+   ========================================================= */
+.top-action-bar { 
+  display: flex; justify-content: flex-end; margin-bottom: 16px; 
+}
+.btn-verifikasi-link { 
+  background-color: #1A365D; color: white; padding: 8px 16px; 
+  border-radius: 20px; font-size: 13px; font-weight: 700; 
+  text-decoration: none; box-shadow: 0 4px 10px rgba(26, 54, 93, 0.15); 
+  transition: opacity 0.2s;
+}
+.btn-verifikasi-link:hover { opacity: 0.9; }
+
+.summary-cards-container { 
+  display: flex; gap: 12px; margin-bottom: 24px; 
+}
+.summary-card { 
+  flex: 1; border-radius: 16px; padding: 16px; color: white; 
+  display: flex; flex-direction: column; box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+}
+.card-saldo { background-color: #1A365D; }
+.card-pengeluaran { background-color: #dc2626; }
+
+.card-title { font-size: 12px; font-weight: 500; margin: 0 0 8px 0; opacity: 0.9; }
+.card-amount { font-size: 20px; font-weight: 800; margin: 0 0 4px 0; line-height: 1.2; }
+.card-subtitle { font-size: 11px; opacity: 0.8; margin: 0; }
+
+/* =========================================================
+   4. RIWAYAT KAS
+   ========================================================= */
+.section-header { 
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; 
+}
+.section-header h2 { font-size: 16px; font-weight: 700; color: #111827; margin: 0; }
+.see-all-link { font-size: 13px; color: #1A365D; text-decoration: none; font-weight: 700; }
+
+.history-card-container { 
+  background: white; border-radius: 16px; padding: 16px; 
+  border: 1px solid #e2e8f0; display: flex; flex-direction: column; 
+  gap: 16px; margin-bottom: 24px; 
+}
+.history-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.history-item:not(:last-child) { border-bottom: 1px solid #f1f5f9; padding-bottom: 16px; }
+
+.icon-box { 
+  width: 40px; height: 40px; border-radius: 12px; 
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
+}
+.icon-income { background-color: #d1fae5; color: #059669; }
+.icon-expense { background-color: #fee2e2; color: #dc2626; }
+
+.history-detail { flex: 1; min-width: 0; }
+.history-detail h3 { 
+  font-size: 14px; font-weight: 700; color: #111827; margin: 0 0 4px 0; 
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
+}
+.history-detail p { font-size: 12px; color: #64748b; margin: 0; }
+
+.history-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.status-badge { font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 8px; }
+.text-green-bg { background-color: #d1fae5; color: #059669; }
+.text-yellow-bg { background-color: #fef3c7; color: #b45309; }
+
+.amount { font-size: 14px; font-weight: 700; }
+.text-green { color: #059669; }
+.text-red { color: #dc2626; }
+
+/* =========================================================
+   5. FORM INPUT PENGELUARAN
+   ========================================================= */
+.form-container { 
+  background: white; border-radius: 16px; padding: 16px; 
+  border: 1px solid #e2e8f0; margin-bottom: 32px; 
+}
+.form-row-group { display: flex; gap: 12px; margin-bottom: 16px; }
+.flex-1 { flex: 1; min-width: 0;}
+
+.form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.form-group label { font-size: 13px; font-weight: 700; color: #1A365D; }
+.form-group input, .form-group select { 
+  width: 100%; padding: 12px; border: 1.5px solid #cbd5e1; border-radius: 10px; 
+  font-size: 14px; outline: none; background: #ffffff; color: #1e293b; 
+  font-family: inherit; box-sizing: border-box; transition: border-color 0.2s; 
+}
+.form-group input:focus, .form-group select:focus { 
+  border-color: #1A365D; box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1); 
+}
+
+/* Kotak Upload Interaktif */
+.upload-box { 
+  border: 1.5px dashed #cbd5e1; border-radius: 12px; padding: 20px; 
+  text-align: center; cursor: pointer; background: #f8fafc; 
+  margin-bottom: 16px; transition: all 0.2s; 
+}
+.upload-box:hover { background: #f1f5f9; border-color: #1A365D; }
+.upload-icon { margin-bottom: 8px; color: #1A365D; }
+.upload-box strong { display: block; font-size: 14px; color: #1A365D; margin-bottom: 4px; }
+.upload-box p { font-size: 12px; color: #64748b; margin: 0; }
+
+.btn-save { 
+  width: 100%; background-color: #1A365D; color: white; border: none; 
+  padding: 14px; border-radius: 12px; font-size: 15px; font-weight: 700; 
+  cursor: pointer; display: flex; align-items: center; justify-content: center; 
+  gap: 8px; transition: opacity 0.2s; 
+}
+.btn-save:hover { opacity: 0.9; }
+
+/* =========================================================
+   6. MODAL POP-UP (Hanya menutupi area layar HP)
+   ========================================================= */
+.modal-overlay { 
+  position: absolute; /* Terkunci di dalam kerangka .app */
+  top: 0; left: 0; width: 100%; height: 100%; 
+  background: rgba(15, 23, 42, 0.6); 
+  display: flex; justify-content: center; align-items: center; 
+  z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s; 
+}
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+.modal-popup-small { 
+  background: white; width: 85%; max-width: 280px; border-radius: 24px; 
+  padding: 24px 20px; text-align: center; box-shadow: 0 10px 25px rgba(0,0,0,0.2); 
+  transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+.modal-overlay.active .modal-popup-small { transform: translateY(0); }
+
+.big-check-icon { 
+  width: 56px; height: 56px; border-radius: 50%; background-color: #059669; 
+  display: flex; align-items: center; justify-content: center; margin: 0 auto 16px auto; 
+}
+.modal-popup-small h4 { 
+  font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 20px 0; line-height: 1.4; 
+}
+.btn-lanjut { 
+  width: 100%; background-color: #1A365D; color: white; border: none; 
+  padding: 12px; border-radius: 12px; font-size: 15px; font-weight: 700; 
+  cursor: pointer; transition: opacity 0.2s; 
+}
+.btn-lanjut:hover { opacity: 0.9; }
