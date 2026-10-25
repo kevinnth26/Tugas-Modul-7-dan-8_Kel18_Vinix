@@ -1,0 +1,201 @@
+/* =========================================================
+   1. KERANGKA LAYAR UTAMA (Curved & Centered)
+   ========================================================= */
+body {
+  background-color: #e2e8f0 !important;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app {
+  background-color: #f8fafc !important; /* Warna abu-abu sangat terang */
+  color: #1e293b !important;
+  width: 100%;
+  max-width: 393px !important;
+  height: 852px;
+  max-height: 90vh;
+  margin: 20px auto !important;
+  border-radius: 36px !important; 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.app main {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   2. HEADER / APPBAR
+   ========================================================= */
+.appbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  background: transparent;
+}
+.appbar__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #1A365D; /* Biru Dongker Gelap */
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+.appbar__text {
+  display: flex;
+  flex-direction: column;
+}
+.appbar__text h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #1A365D;
+}
+.appbar__text p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* =========================================================
+   3. LAYOUT FORM
+   ========================================================= */
+.stack {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 20px;
+}
+.form-title { 
+  font-size: 22px; 
+  font-weight: 700; 
+  color: #1A365D; 
+  margin: 0 0 8px 0; 
+}
+.lead {
+  font-size: 14.5px;
+  color: #64748b;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.field label {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #1A365D;
+}
+
+/* =========================================================
+   4. INPUT TEXTAREA & DROPZONE
+   ========================================================= */
+.textarea {
+  width: 100%; 
+  resize: vertical; 
+  min-height: 120px;
+  background: #fff; 
+  border: 1.5px dashed #94a3b8; 
+  border-radius: 12px;
+  padding: 16px; 
+  font-size: 15px; 
+  color: #1e293b;
+  outline: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+.textarea::placeholder { color: #94a3b8; }
+.textarea:focus { border-color: #1A365D; box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1); }
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 120px;
+  background-color: #ffffff;
+  border: 1.5px dashed #94a3b8;
+  border-radius: 12px;
+  padding: 20px;
+  box-sizing: border-box;
+  text-align: center;
+  cursor: pointer;
+  color: #1A365D;
+  transition: all 0.2s ease;
+}
+.dropzone:hover {
+  border-color: #1A365D;
+  background-color: #f8fafc;
+}
+.dropzone strong {
+  font-size: 14.5px;
+  font-weight: 700;
+  margin: 12px 0 4px 0;
+  color: #1A365D;
+}
+.dropzone small {
+  font-size: 12.5px;
+  color: #64748b;
+}
+
+/* =========================================================
+   5. CATATAN & TOMBOL KIRIM
+   ========================================================= */
+.hint {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+/* Memaksa tombol ke bagian paling bawah */
+.btn {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 52px;
+  border-radius: 14px;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  background-color: #1A365D;
+  color: #ffffff;
+  transition: opacity 0.2s;
+}
+.btn:hover {
+  opacity: 0.9;
+}

@@ -16,7 +16,7 @@ export default function Profil() {
   return (
     <div className="app" id="app">
       <main id="main">
-        <section className="view" aria-label="Profil Saya">
+        <section className="view-profil" aria-label="Profil Saya">
           
           {/* Bagian Atas: Profil Hero */}
           <header className="hero">

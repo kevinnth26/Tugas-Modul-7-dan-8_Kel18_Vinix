@@ -33,7 +33,7 @@ body {
   flex-direction: column;
 }
 
-.view {
+.view-profil {
   display: flex;
   flex-direction: column;
   height: 100%;
