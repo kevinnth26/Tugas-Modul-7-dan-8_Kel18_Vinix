@@ -1,0 +1,145 @@
+/* =========================================================
+   1. KERANGKA LAYAR UTAMA (Standar)
+   ========================================================= */
+body {
+  background-color: #e2e8f0 !important;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app {
+  background-color: #f8fafc !important; 
+  color: #1e293b !important;
+  width: 100%;
+  max-width: 393px !important;
+  height: 852px;
+  max-height: 90vh;
+  margin: 20px auto !important;
+  border-radius: 36px !important; 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.app main {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.view-datawarga {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0 24px 24px 24px; 
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   2. HEADER / APPBAR (STICKY)
+   ========================================================= */
+.appbar {
+  position: sticky; 
+  top: 0; 
+  z-index: 50; 
+  background-color: #f8fafc; 
+  margin: 0 -24px 20px -24px; 
+  padding: 24px 24px 16px 24px; 
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8); 
+}
+.appbar__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: #1A365D;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
+}
+.appbar__text h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 4px 0;
+  color: #111827;
+}
+.appbar__text p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* =========================================================
+   3. SEARCH BAR
+   ========================================================= */
+.search-container { position: relative; margin-bottom: 24px; }
+.search-icon { 
+  position: absolute; left: 16px; top: 50%; transform: translateY(-50%); 
+  color: #94a3b8;
+}
+.search-input { 
+  width: 100%; padding: 14px 14px 14px 44px; 
+  border: 1px solid #cbd5e1; border-radius: 12px; 
+  font-size: 14px; outline: none; background: white; 
+  color: #1e293b; box-sizing: border-box; transition: border-color 0.2s;
+}
+.search-input::placeholder { color: #94a3b8; }
+.search-input:focus { border-color: #1A365D; box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1);}
+
+/* =========================================================
+   4. STATS CARDS (Navy Box)
+   ========================================================= */
+.stats-container { display: flex; gap: 12px; margin-bottom: 24px; }
+.stat-card { 
+  flex: 1; background-color: #0F172A; border-radius: 16px; padding: 18px 16px; 
+  color: white; position: relative; overflow: hidden; 
+  box-shadow: 0 8px 16px rgba(15, 23, 42, 0.15); 
+}
+.stat-number { font-size: 28px; font-weight: 800; margin-bottom: 6px; line-height: 1; }
+.stat-label { font-size: 12px; color: #93c5fd; font-weight: 600; margin: 0;}
+
+/* =========================================================
+   5. SECTION HEADER
+   ========================================================= */
+.section-header { 
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; 
+}
+.section-header h2 { font-size: 16px; font-weight: 700; color: #111827; margin: 0; }
+.sort-text { font-size: 12.5px; font-weight: 600; color: #475569; cursor: pointer; }
+
+/* =========================================================
+   6. WARGA LIST & CARDS
+   ========================================================= */
+.warga-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+.warga-card { 
+  background: white; border-radius: 16px; padding: 16px; 
+  display: flex; align-items: center; gap: 14px; 
+  border: 1px solid #e2e8f0; box-shadow: 0 2px 6px rgba(0,0,0,0.02); 
+  cursor: pointer; transition: all 0.2s; text-decoration: none;
+}
+.warga-card:hover { border-color: #cbd5e1; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.05); }
+
+/* Menggunakan class unik agar tidak bentrok dengan avatar profil */
+.avatar-warga { 
+  width: 44px; height: 44px; border-radius: 50%; background-color: #e2e8f0; 
+  color: #0F172A; font-weight: 700; font-size: 14px; 
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; 
+}
+.warga-info { flex: 1; min-width: 0; }
+.warga-info h3 { font-size: 15px; font-weight: 700; color: #111827; margin: 0 0 4px 0; }
+.warga-info p { font-size: 12px; color: #64748b; margin: 0 0 6px 0; }
+.phone { font-size: 12.5px; color: #0F172A; font-weight: 600; }
+
+.empty-search { text-align: center; padding: 32px 16px; color: #64748b; font-size: 13px;}
