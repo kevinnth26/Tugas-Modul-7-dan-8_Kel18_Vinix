@@ -5,7 +5,7 @@ import './index.css';
 export default function Dashboard() {
   return (
     <>
-      <div className="mobile-wrapper">
+      <div className="dashboard-wrapper">
         {/* Area Konten Utama yang bisa di-scroll */}
         <div className="content-area-dashboard">
           {/* Header Biru */}
