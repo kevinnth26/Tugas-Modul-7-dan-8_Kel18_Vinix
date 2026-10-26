@@ -1,0 +1,12 @@
+{
+  "today": "2026-10-04",
+  "activities": [
+    { "id": 1, "name": "Siti Rahma", "desc": "Membayar iuran September", "date": "2026-10-04", "time": "20:10", "status": "success", "label": "Rp 150.000" },
+    { "id": 2, "name": "Andi Pratama", "desc": "Meminjam Tenda", "date": "2026-10-04", "time": "14:44", "status": "pending", "label": "Menunggu" },
+    { "id": 3, "name": "Dewi Ningsih", "desc": "Mengembalikan 10 Kursi", "date": "2026-10-03", "time": "16:20", "status": "success", "label": "Selesai" },
+    { "id": 4, "name": "Bambang S.", "desc": "Membayar iuran Oktober", "date": "2026-10-03", "time": "09:10", "status": "success", "label": "Rp 150.000" },
+    { "id": 5, "name": "Fajar Aditya", "desc": "Meminjam Tenda Pleton", "date": "2026-10-03", "time": "08:07", "status": "rejected", "label": "Ditolak" },
+    { "id": 6, "name": "Wawan Wirhayu", "desc": "Meminjam 2 unit salon", "date": "2026-10-02", "time": "16:20", "status": "success", "label": "Terverifikasi" },
+    { "id": 7, "name": "Winona Ryder", "desc": "Meminjam 1 unit Salon", "date": "2026-10-02", "time": "09:10", "status": "success", "label": "Terverifikasi" }
+  ]
+}

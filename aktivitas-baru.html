@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1f3a">
+  <title>Aktivitas Terbaru – RuangWarga</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="aktivitas-baru.css">
+  <script src="common.js" defer></script>
+  <script src="aktivitas-baru.js" defer></script>
+</head>
+<body>
+
+<div class="app" id="app">
+  <main id="main">
+
+    <section class="view" aria-label="Aktivitas Terbaru">
+      <header class="appbar">
+        <a class="appbar__back" href="dashboard.html" aria-label="Kembali ke Dashboard Admin"><svg class="i" aria-hidden="true"><use href="#i-back"/></svg></a>
+        <div class="appbar__text">
+          <h1>Aktivitas Terbaru</h1>
+          <p>Riwayat Aktivitas</p>
+        </div>
+      </header>
+
+      <!-- Isi (skeleton / daftar / kosong / error) dirender oleh aktivitas-baru.js -->
+      <div class="stack stack--plain feed" id="feed" aria-live="polite" aria-busy="true"></div>
+    </section>
+
+  </main>
+</div>
+
+</body>
+</html>
