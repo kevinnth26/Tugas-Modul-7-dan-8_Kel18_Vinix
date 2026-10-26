@@ -1,24 +1,60 @@
 "use client";
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { supabase } from '../../lib/supabase';
 import './manajemen-keuangan.css';
 
 export default function ManajemenKeuangan() {
   const router = useRouter();
+
   
-  // States
+  // States UI Asli
   const [showModal, setShowModal] = useState(false);
   const [fileName, setFileName] = useState("");
   const fileInputRef = useRef(null);
 
-  // Data Dummy Riwayat
-  const historyData = [
-    { id: 1, type: 'income', title: 'Iuran Warga September', desc: 'Siti Rahma - 3 Oktober 2026', status: 'Terverifikasi', statusColor: 'text-green-bg', amount: '+Rp 150.000', amountColor: 'text-green' },
-    { id: 2, type: 'expense', title: 'Perbaikan Pompa Air', desc: 'Operasional - 2 Oktober 2026', status: 'Terverifikasi', statusColor: 'text-green-bg', amount: '-Rp 650.000', amountColor: 'text-red' },
-    { id: 3, type: 'expense', title: 'Tagihan Listrik Pos RT', desc: 'Listrik - 1 Oktober 2026', status: 'Menunggu', statusColor: 'text-yellow-bg', amount: '-Rp 285.000', amountColor: 'text-red' },
-  ];
+  // States Supabase
+  const [historyData, setHistoryData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  // Input form state
+  const [nominal, setNominal] = useState('');
+  const [kategori, setKategori] = useState('Perbaikan');
+  const [deskripsi, setDeskripsi] = useState('');
+
+  // Ambil data riwayat dari Supabase
+  const fetchKeuangan = async () => {
+    setLoading(true);
+    const { data, error } = await supabase.from('keuangan_iuran').select('*').order('id', { ascending: false });
+    if (error) {
+      console.error('Gagal memuat data:', error);
+    } else {
+      const formattedData = (data || []).map((item) => {
+        const jenis = item.jenis_pembayaran || 'Pengeluaran RT';
+        const jumlahVal = item.nominal || 0;
+        const statusVal = item.status || 'Belum Lunas';
+        
+        return {
+          id: item.id,
+          type: statusVal === 'Lunas' || statusVal === 'Terverifikasi' ? 'income' : 'expense',
+          title: `Kas - ${jenis}`,
+          desc: `Rp ${Number(jumlahVal).toLocaleString()}`,
+          status: statusVal,
+          statusColor: statusVal === 'Lunas' || statusVal === 'Terverifikasi' ? 'text-green-bg' : 'text-yellow-bg',
+          amount: `Rp ${Number(jumlahVal).toLocaleString()}`,
+          amountColor: statusVal === 'Lunas' || statusVal === 'Terverifikasi' ? 'text-green' : 'text-red'
+        };
+      });
+      setHistoryData(formattedData);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchKeuangan();
+  }, []);
 
   // Handler Upload
   const handleFileChange = (e) => {
@@ -27,21 +63,58 @@ export default function ManajemenKeuangan() {
   };
   const triggerFileInput = () => fileInputRef.current.click();
 
-  // Handler Submit
-  const handleSaveExpense = (e) => {
+  // Handler Submit Form ke Database Supabase (Aman dari Foreign Key)
+  const handleSaveExpense = async (e) => {
     e.preventDefault();
-    setShowModal(true); // Munculkan modal sukses
+    
+    const parsedNominal = parseFloat(nominal.replace(/[^0-9]/g, '')) || 0;
+
+    try {
+      // 1. Ambil ID warga pertama yang ada di database untuk menghindari error Foreign Key
+      const { data: wargaData, error: wargaError } = await supabase
+        .from('warga')
+        .select('id')
+        .limit(1);
+
+      if (wargaError || !wargaData || wargaData.length === 0) {
+        throw new Error("Tabel warga kosong di Supabase.");
+      }
+
+      const validWargaId = wargaData[0].id;
+
+      // 2. Simpan data pengeluaran dengan warga_id yang valid
+      const { error } = await supabase.from('keuangan_iuran').insert([
+        { 
+          warga_id: validWargaId,
+          jenis_pembayaran: `${kategori} - ${deskripsi || 'Pengeluaran'}`, 
+          nominal: parsedNominal, 
+          bukti_transfer: fileName || 'tanpa_bukti.jpg',
+          status: 'Belum Lunas' 
+        }
+      ]);
+
+      if (error) throw error;
+
+      setShowModal(true);
+      setNominal('');
+      setDeskripsi('');
+      setFileName('');
+      fetchKeuangan();
+
+    } catch (err) {
+      console.error(err);
+      alert('Gagal menyimpan ke database! Pastikan tabel warga memiliki data.');
+    }
   };
 
   const closeModal = () => {
     setShowModal(false);
-    // Disini Anda bisa menambahkan logika reset form jika diperlukan
   };
 
   return (
     <div className="app" id="app">
       
-      {/* MODAL POP-UP (Akan muncul saat form di submit) */}
+      {/* MODAL POP-UP SUKSES */}
       <div className={`modal-overlay ${showModal ? 'active' : ''}`}>
         <div className="modal-popup-small">
           <div className="big-check-icon">
@@ -96,25 +169,31 @@ export default function ManajemenKeuangan() {
           </div>
 
           <div className="history-card-container">
-            {historyData.map(item => (
-              <div key={item.id} className="history-item">
-                <div className={`icon-box ${item.type === 'income' ? 'icon-income' : 'icon-expense'}`}>
-                  {item.type === 'income' ? (
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
-                  ) : (
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="17" y1="7" x2="7" y2="17"/><polyline points="17 17 7 17 7 7"/></svg>
-                  )}
+            {loading ? (
+              <p style={{ padding: '15px', color: '#666' }}>Memuat data...</p>
+            ) : historyData.length === 0 ? (
+              <p style={{ padding: '15px', color: '#666' }}>Belum ada riwayat tercatat.</p>
+            ) : (
+              historyData.map(item => (
+                <div key={item.id} className="history-item">
+                  <div className={`icon-box ${item.type === 'income' ? 'icon-income' : 'icon-expense'}`}>
+                    {item.type === 'income' ? (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+                    ) : (
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="17" y1="7" x2="7" y2="17"/><polyline points="17 17 7 17 7 7"/></svg>
+                    )}
+                  </div>
+                  <div className="history-detail">
+                    <h3>{item.title}</h3>
+                    <p>{item.desc}</p>
+                  </div>
+                  <div className="history-right">
+                    <span className={`status-badge ${item.statusColor}`}>{item.status}</span>
+                    <span className={`amount ${item.amountColor}`}>{item.amount}</span>
+                  </div>
                 </div>
-                <div className="history-detail">
-                  <h3>{item.title}</h3>
-                  <p>{item.desc}</p>
-                </div>
-                <div className="history-right">
-                  <span className={`status-badge ${item.statusColor}`}>{item.status}</span>
-                  <span className={`amount ${item.amountColor}`}>{item.amount}</span>
-                </div>
-              </div>
-            ))}
+              ))
+            )}
           </div>
 
           {/* Input Pengeluaran Section */}
@@ -128,11 +207,22 @@ export default function ManajemenKeuangan() {
               <div className="form-row-group">
                 <div className="form-group flex-1">
                   <label htmlFor="expenseNominal">Nominal</label>
-                  <input type="text" id="expenseNominal" placeholder="Rp 0" required />
+                  <input 
+                    type="text" 
+                    id="expenseNominal" 
+                    placeholder="Rp 0" 
+                    value={nominal}
+                    onChange={(e) => setNominal(e.target.value)}
+                    required 
+                  />
                 </div>
                 <div className="form-group flex-1">
                   <label htmlFor="expenseCategory">Kategori</label>
-                  <select id="expenseCategory">
+                  <select 
+                    id="expenseCategory"
+                    value={kategori}
+                    onChange={(e) => setKategori(e.target.value)}
+                  >
                     <option value="Perbaikan">Perbaikan</option>
                     <option value="Operasional">Operasional</option>
                     <option value="Listrik">Listrik & Air</option>
@@ -143,7 +233,14 @@ export default function ManajemenKeuangan() {
 
               <div className="form-group">
                 <label htmlFor="expenseDesc">Deskripsi Pengeluaran</label>
-                <input type="text" id="expenseDesc" placeholder="Deskripsi" required />
+                <input 
+                  type="text" 
+                  id="expenseDesc" 
+                  placeholder="Deskripsi" 
+                  value={deskripsi}
+                  onChange={(e) => setDeskripsi(e.target.value)}
+                  required 
+                />
               </div>
 
               {/* Upload Box Interactive */}

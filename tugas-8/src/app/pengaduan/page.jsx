@@ -2,12 +2,17 @@
 
 import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
+import { supabase } from '../../lib/supabase';
 import './pengaduan.css';
 
 export default function Pengaduan() {
   const router = useRouter();
   const fileInputRef = useRef(null);
   const [fileName, setFileName] = useState("");
+  
+  const [deskripsi, setDeskripsi] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -20,20 +25,73 @@ export default function Pengaduan() {
     fileInputRef.current.click();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Di sini logika untuk mengirim pengaduan ke database
-    alert("Laporan Anda berhasil dikirim!");
-    router.back(); // Kembali ke halaman sebelumnya setelah submit
+    if (!deskripsi.trim()) return;
+    
+    setLoading(true);
+
+    try {
+      // 1. Ambil dulu ID warga yang ada di database agar tidak melanggar Foreign Key (warga_id)
+      const { data: wargaData, error: wargaError } = await supabase
+        .from('warga')
+        .select('id')
+        .limit(1);
+
+      if (wargaError || !wargaData || wargaData.length === 0) {
+        throw new Error("Tidak ada data warga di database untuk mengisi warga_id.");
+      }
+
+      const validWargaId = wargaData[0].id;
+
+      // 2. Kirim pengaduan dengan warga_id yang valid
+      const { error } = await supabase.from('pengaduan').insert([
+        { 
+          warga_id: validWargaId,
+          deskripsi: deskripsi, 
+          status: 'Menunggu',
+          judul_laporan: 'Laporan Warga',
+          foto_url: fileName || ''
+        }
+      ]);
+
+      if (error) throw error;
+
+      setLoading(false);
+      setShowModal(true);
+      setDeskripsi('');
+      setFileName('');
+
+    } catch (err) {
+      setLoading(false);
+      console.error('Error detail:', err);
+      alert("Gagal mengirim laporan. Pastikan tabel 'warga' sudah memiliki minimal 1 data warga di Supabase.");
+    }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    router.back();
   };
 
   return (
     <div className="app" id="app">
+      
+      {/* MODAL POP-UP SUKSES */}
+      <div className={`modal-overlay ${showModal ? 'active' : ''}`}>
+        <div className="modal-popup-small">
+          <div className="big-check-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h4>Laporan Berhasil<br/>Dikirim!</h4>
+          <button type="button" className="btn-lanjut" onClick={closeModal}>Lanjut</button>
+        </div>
+      </div>
+
       <main id="main">
         <section className="view" aria-label="Pengaduan">
           
           <header className="appbar">
-            {/* Tombol Back Dinamis menggunakan router.back() */}
             <button className="appbar__back" onClick={() => router.back()} aria-label="Kembali">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12" />
@@ -59,6 +117,8 @@ export default function Pengaduan() {
                 className="textarea" 
                 rows="3" 
                 placeholder="Jelaskan lokasi, waktu, dan kronologi kejadian..." 
+                value={deskripsi}
+                onChange={(e) => setDeskripsi(e.target.value)}
                 required
               ></textarea>
             </div>
@@ -66,7 +126,6 @@ export default function Pengaduan() {
             <div className="field">
               <label id="p-foto-label">Upload Foto</label>
               
-              {/* Input file asli (disembunyikan) */}
               <input 
                 type="file" 
                 id="p-foto" 
@@ -76,7 +135,6 @@ export default function Pengaduan() {
                 hidden 
               />
               
-              {/* Tombol visual Dropzone yang interaktif */}
               <div 
                 className="dropzone" 
                 id="p-drop" 
@@ -106,7 +164,9 @@ export default function Pengaduan() {
               <span>Pastikan foto tidak memuat data pribadi warga lain tanpa izin.</span>
             </p>
 
-            <button type="submit" className="btn">Kirim Laporan</button>
+            <button type="submit" className="btn" disabled={loading}>
+              {loading ? 'Mengirim...' : 'Kirim Laporan'}
+            </button>
           </form>
 
         </section>
