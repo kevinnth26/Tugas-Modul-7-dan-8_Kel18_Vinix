@@ -1,111 +1,91 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
+import { supabase } from '../../../lib/supabase'; // Sesuaikan path ini dengan folder Anda
 import '../data-keluarga.css';
 
 export default function DataKeluargaDetail() {
   const router = useRouter();
   const params = useParams();
-  const { id } = params; 
+  const { id } = params; // Mendapatkan ID warga dari URL
   
   const [showToast, setShowToast] = useState(false);
+  
+  // State untuk menyimpan data dari Supabase
+  const [dataWarga, setDataWarga] = useState(null);
+  const [anggotaKeluarga, setAnggotaKeluarga] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // 1. DATABASE BUATAN (Sudah dilengkapi semua warga)
-  const databaseKeluarga = {
-    andi: {
-      inisial: 'AP',
-      nama_kk: 'Andi Pratama',
-      alamat: 'Jl. Garuda VI No. 31 • 4 Anggota',
-      telepon: '0821 3184 3044',
-      anggota: [
-        { id: 1, nama: 'Andi Pratama', nik: '3578••••••••0001', status: 'Kepala keluarga', gender: 'Laki-laki' },
-        { id: 2, nama: 'Sari Wulandari', nik: '3578••••••••0002', status: 'Istri', gender: 'Perempuan' },
-        { id: 3, nama: 'Rizky Pratama', nik: '3578••••••••0003', status: 'Anak', gender: 'Laki-laki' },
-        { id: 4, nama: 'Nadia Putri Pratama', nik: '3578••••••••0004', status: 'Anak', gender: 'Perempuan' },
-      ]
-    },
-    bambang: {
-      inisial: 'BS',
-      nama_kk: 'Bambang Susanto',
-      alamat: 'Jl. Garuda VII No. 12 • 3 Anggota',
-      telepon: '0812 8841 2330',
-      anggota: [
-        { id: 1, nama: 'Bambang Susanto', nik: '3578••••••••0010', status: 'Kepala keluarga', gender: 'Laki-laki' },
-        { id: 2, nama: 'Siti Aminah', nik: '3578••••••••0011', status: 'Istri', gender: 'Perempuan' },
-        { id: 3, nama: 'Dimas Susanto', nik: '3578••••••••0012', status: 'Anak', gender: 'Laki-laki' },
-      ]
-    },
-    dewi: {
-      inisial: 'DN',
-      nama_kk: 'Dewi Ningsih',
-      alamat: 'Jl. Merdeka VI No. 21 • 2 Anggota',
-      telepon: '0812 7712 3401',
-      anggota: [
-        { id: 1, nama: 'Dewi Ningsih', nik: '3578••••••••0020', status: 'Kepala keluarga', gender: 'Perempuan' },
-        { id: 2, nama: 'Budi Santoso', nik: '3578••••••••0021', status: 'Suami', gender: 'Laki-laki' },
-      ]
-    },
-    fajar: {
-      inisial: 'FA',
-      nama_kk: 'Fajar Aditya',
-      alamat: 'Jl. Garuda VI No. 16 • 2 Anggota',
-      telepon: '0813 4120 0892',
-      anggota: [
-        { id: 1, nama: 'Fajar Aditya', nik: '3578••••••••0030', status: 'Kepala keluarga', gender: 'Laki-laki' },
-        { id: 2, nama: 'Rina Marlina', nik: '3578••••••••0031', status: 'Istri', gender: 'Perempuan' },
-      ]
-    },
-    siti: {
-      inisial: 'SR',
-      nama_kk: 'Siti Rahma',
-      alamat: 'Jl. Merdeka VII No. 16 • 2 Anggota',
-      telepon: '0888 0563 7589',
-      anggota: [
-        { id: 1, nama: 'Siti Rahma', nik: '3578••••••••0040', status: 'Kepala keluarga', gender: 'Perempuan' },
-        { id: 2, nama: 'Ahmad Fauzi', nik: '3578••••••••0041', status: 'Suami', gender: 'Laki-laki' },
-      ]
-    },
-    yani: {
-      inisial: 'YK',
-      nama_kk: 'Yani Kurniawan',
-      alamat: 'Jl. Garuda VI No. 14 • 4 Anggota',
-      telepon: '0813 2245 6701',
-      anggota: [
-        { id: 1, nama: 'Yani Kurniawan', nik: '3578••••••••0050', status: 'Kepala keluarga', gender: 'Laki-laki' },
-        { id: 2, nama: 'Fitri Handayani', nik: '3578••••••••0051', status: 'Istri', gender: 'Perempuan' },
-        { id: 3, nama: 'Zidan Kurniawan', nik: '3578••••••••0052', status: 'Anak', gender: 'Laki-laki' },
-        { id: 4, nama: 'Zahra Kurniawan', nik: '3578••••••••0053', status: 'Anak', gender: 'Perempuan' },
-      ]
-    },
-    wawan: {
-      inisial: 'WW',
-      nama_kk: 'Wawan Wirhayu',
-      alamat: 'Jl. Garuda V No. 08 • 3 Anggota',
-      telepon: '0812 9987 1122',
-      anggota: [
-        { id: 1, nama: 'Wawan Wirhayu', nik: '3578••••••••0060', status: 'Kepala keluarga', gender: 'Laki-laki' },
-        { id: 2, nama: 'Ratna Sari', nik: '3578••••••••0061', status: 'Istri', gender: 'Perempuan' },
-        { id: 3, nama: 'Gilang Wirhayu', nik: '3578••••••••0062', status: 'Anak', gender: 'Laki-laki' },
-      ]
-    }
+  // Fungsi pembantu untuk membuat inisial nama
+  const getInitials = (name) => {
+    if (!name) return "NN";
+    const words = name.split(" ");
+    if (words.length === 1) return words[0].substring(0, 2).toUpperCase();
+    return (words[0][0] + words[1][0]).toUpperCase();
   };
 
-  // 2. AMBIL DATA SESUAI ID DI URL
-  const dataKeluarga = databaseKeluarga[id];
+  // Mengambil data dari Supabase saat halaman dimuat
+  useEffect(() => {
+    const fetchDetailKeluarga = async () => {
+      setIsLoading(true);
+      try {
+        // 1. Ambil data Kepala Keluarga dari tabel 'warga'
+        const { data: wargaData, error: wargaError } = await supabase
+          .from('warga')
+          .select('*')
+          .eq('id', id)
+          .single(); // single() karena ID pasti unik/satu orang
+
+        if (wargaError) throw wargaError;
+        setDataWarga(wargaData);
+
+        // 2. Ambil data seluruh anggota keluarga dari tabel 'anggota_keluarga'
+        const { data: anggotaData, error: anggotaError } = await supabase
+          .from('anggota_keluarga')
+          .select('*')
+          .eq('warga_id', id)
+          .order('id', { ascending: true }); // Urutkan berdasarkan ID agar Kepala Keluarga di atas
+
+        if (anggotaError) throw anggotaError;
+        setAnggotaKeluarga(anggotaData || []);
+
+      } catch (error) {
+        console.error('Error mengambil data:', error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (id) {
+      fetchDetailKeluarga();
+    }
+  }, [id]);
 
   const handleJadikanAdmin = () => {
     setShowToast(true);
     setTimeout(() => setShowToast(false), 3000);
+    // Nanti bisa ditambahkan logika Supabase .update() untuk mengubah kolom 'role' menjadi 'admin'
   };
 
-  // 3. JIKA DATA TIDAK DITEMUKAN
-  if (!dataKeluarga) {
+  // Tampilan saat data sedang dimuat (Loading)
+  if (isLoading) {
+    return (
+      <div className="app" id="app">
+        <main id="main" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+          <p style={{ color: '#64748b', fontWeight: '500' }}>Memuat data keluarga...</p>
+        </main>
+      </div>
+    );
+  }
+
+  // Tampilan jika ID tidak ditemukan di database
+  if (!dataWarga) {
     return (
       <div className="app" id="app">
         <main id="main" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', padding: '24px', textAlign: 'center' }}>
           <h2 style={{ color: '#1A365D', marginBottom: '8px' }}>Data Tidak Ditemukan</h2>
-          <p style={{ color: '#64748b', marginBottom: '24px', fontSize: '14px' }}>Keluarga dengan ID "{id}" belum terdaftar.</p>
+          <p style={{ color: '#64748b', marginBottom: '24px', fontSize: '14px' }}>Keluarga dengan ID "{id}" belum terdaftar atau telah dihapus.</p>
           <button onClick={() => router.back()} style={{ padding: '12px 24px', background: '#1A365D', color: 'white', border: 'none', borderRadius: '12px', fontWeight: 'bold', cursor: 'pointer' }}>
             Kembali ke Data Warga
           </button>
@@ -114,7 +94,7 @@ export default function DataKeluargaDetail() {
     );
   }
 
-  // 4. JIKA DATA DITEMUKAN
+  // Tampilan Utama jika Data Berhasil Ditarik
   return (
     <div className="app" id="app">
       
@@ -138,13 +118,14 @@ export default function DataKeluargaDetail() {
             </div>
           </header>
 
+          {/* Kartu Profil Kepala Keluarga (Dari tabel warga) */}
           <div className="family-profile-card">
             <div className="profile-header">
-              <div className="avatar-large">{dataKeluarga.inisial}</div>
+              <div className="avatar-large">{getInitials(dataWarga.nama_lengkap)}</div>
               <div className="profile-title">
-                <h2>{dataKeluarga.nama_kk}</h2>
-                <p>{dataKeluarga.alamat}</p>
-                <span className="phone-text">{dataKeluarga.telepon}</span>
+                <h2>{dataWarga.nama_lengkap}</h2>
+                <p>{dataWarga.alamat} • {dataWarga.jumlah_anggota || 1} Anggota</p>
+                <span className="phone-text">{dataWarga.no_hp}</span>
               </div>
             </div>
           </div>
@@ -153,27 +134,34 @@ export default function DataKeluargaDetail() {
             <h3>Anggota Keluarga</h3>
           </div>
 
+          {/* Daftar Anggota (Dari tabel anggota_keluarga) */}
           <div className="member-list">
-            {dataKeluarga.anggota.map((member) => (
-              <div key={member.id} className="member-card">
-                <div className="member-row">
-                  <span className="label">Nama Lengkap</span>
-                  <span className="value bold">{member.nama}</span>
+            {anggotaKeluarga.length > 0 ? (
+              anggotaKeluarga.map((member) => (
+                <div key={member.id} className="member-card">
+                  <div className="member-row">
+                    <span className="label">Nama Lengkap</span>
+                    <span className="value bold">{member.nama_lengkap}</span>
+                  </div>
+                  <div className="member-row">
+                    <span className="label">NIK</span>
+                    <span className="value nik">{member.nik}</span>
+                  </div>
+                  <div className="member-row">
+                    <span className="label">Status Hubungan Dalam Keluarga</span>
+                    <span className="value">{member.status_hubungan}</span>
+                  </div>
+                  <div className="member-row">
+                    <span className="label">Jenis Kelamin</span>
+                    <span className="value">{member.jenis_kelamin}</span>
+                  </div>
                 </div>
-                <div className="member-row">
-                  <span className="label">NIK</span>
-                  <span className="value nik">{member.nik}</span>
-                </div>
-                <div className="member-row">
-                  <span className="label">Status Hubungan Dalam Keluarga</span>
-                  <span className="value">{member.status}</span>
-                </div>
-                <div className="member-row">
-                  <span className="label">Jenis Kelamin</span>
-                  <span className="value">{member.gender}</span>
-                </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <p style={{ fontSize: '13px', color: '#64748b', textAlign: 'center', marginTop: '10px' }}>
+                Belum ada data anggota keluarga yang ditambahkan.
+              </p>
+            )}
           </div>
 
           <div className="action-buttons-container">

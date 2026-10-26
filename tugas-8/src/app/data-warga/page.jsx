@@ -1,134 +1,153 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import { supabase } from "../../lib/supabase";
-import "./data-warga.css";
 
-export default function DataWargaPage() {
-  const [wargaList, setWargaList] = useState([]);
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { supabase } from '../../lib/supabase'; // Sesuaikan path ini
+import './data-warga.css';
+
+export default function DataWarga() {
+  const router = useRouter();
+  
+  // State untuk data dan pencarian
   const [searchQuery, setSearchQuery] = useState("");
+  const [wargaData, setWargaData] = useState([]);
+  
+  // State untuk kartu statistik (Card Biru)
+  const [totalWarga, setTotalWarga] = useState(0);
+  const [totalKepalaKeluarga, setTotalKepalaKeluarga] = useState(0);
+  
+  // State untuk status loading
   const [isLoading, setIsLoading] = useState(true);
 
   // Fungsi untuk menarik data dari Supabase
-  const fetchWarga = async () => {
-    setIsLoading(true);
-    const { data, error } = await supabase
-      .from("warga")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      console.error("Gagal memuat data warga:", error.message);
-    } else {
-      setWargaList(data || []);
-    }
-    setIsLoading(false);
-  };
-
   useEffect(() => {
-    fetchWarga();
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        // 1. Ambil data daftar Kepala Keluarga (Tabel warga) sekaligus hitung totalnya
+        const { data: warga, count: kkCount, error: wargaError } = await supabase
+          .from('warga')
+          .select('*', { count: 'exact' })
+          .order('nama_lengkap', { ascending: true }); // Mengurutkan dari A-Z
+
+        if (wargaError) throw wargaError;
+
+        // 2. Hitung total anggota keluarga (Tabel anggota_keluarga)
+        // head: true artinya kita hanya butuh angkanya (count), bukan isi datanya
+        const { count: anggotaCount, error: anggotaError } = await supabase
+          .from('anggota_keluarga')
+          .select('*', { count: 'exact', head: true });
+
+        if (anggotaError) throw anggotaError;
+
+        // Simpan ke dalam state
+        setWargaData(warga || []);
+        setTotalKepalaKeluarga(kkCount || 0);
+        
+        // Memasukkan hasil hitung tabel anggota_keluarga ke card kiri
+        setTotalWarga(anggotaCount || 0); 
+        
+      } catch (error) {
+        console.error('Error mengambil data:', error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, []);
 
-  // Filter pencarian berdasarkan nama atau alamat
-  const filteredWarga = wargaList.filter((warga) =>
-    warga.nama_lengkap?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    warga.alamat?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Fungsi pembantu untuk membuat inisial nama (Misal: "Bambang Susanto" -> "BS")
+  const getInitials = (name) => {
+    if (!name) return "NN";
+    const words = name.split(" ");
+    if (words.length === 1) return words[0].substring(0, 2).toUpperCase();
+    return (words[0][0] + words[1][0]).toUpperCase();
+  };
+
+  // Logika Filter Data Pencarian (Mencari berdasarkan Nama, Alamat, atau No HP)
+  const filteredWarga = wargaData.filter(warga => {
+    const nameMatch = warga.nama_lengkap?.toLowerCase().includes(searchQuery.toLowerCase());
+    const phoneMatch = warga.no_hp?.includes(searchQuery);
+    const addressMatch = warga.alamat?.toLowerCase().includes(searchQuery.toLowerCase());
+    return nameMatch || phoneMatch || addressMatch;
+  });
 
   return (
-    <div className="app">
-      <main>
-        <div className="view-datawarga">
+    <div className="app" id="app">
+      <main id="main">
+        <section className="view-datawarga" aria-label="Data Warga">
           
-          {/* Header / Appbar */}
           <header className="appbar">
-            <Link href="/dashboard" className="appbar__back">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M19 12H5M12 19l-7-7 7-7" />
+            <button className="appbar__back" onClick={() => router.back()} aria-label="Kembali">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12" />
+                <polyline points="12 19 5 12 12 5" />
               </svg>
-            </Link>
+            </button>
             <div className="appbar__text">
               <h1>Data Warga</h1>
-              <p>Dokumentasi & Informasi Warga RT</p>
+              <p>Data Warga RT 01/RW 02</p>
             </div>
           </header>
 
-          {/* Search Bar */}
+          {/* Search Bar Interactive */}
           <div className="search-container">
-            <svg className="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            <svg className="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Cari nama warga atau alamat..."
+            <input 
+              type="text" 
+              className="search-input" 
+              placeholder="Cari nama, alamat, atau nomor HP..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
 
-          {/* Stats Cards */}
+          {/* Stats Cards (Terhubung ke Database) */}
           <div className="stats-container">
             <div className="stat-card">
-              <div className="stat-number">{wargaList.length}</div>
-              <p className="stat-label">Total Kepala Keluarga</p>
+              <div className="stat-number">{isLoading ? '...' : totalWarga}</div>
+              <div className="stat-label">Total warga</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">{isLoading ? '...' : totalKepalaKeluarga}</div>
+              <div className="stat-label">Kepala keluarga</div>
             </div>
           </div>
 
-          {/* Section Header */}
+          {/* Section Title */}
           <div className="section-header">
-            <h2>Daftar Warga Terdaftar</h2>
-            <span className="sort-text" onClick={fetchWarga}>Perbarui Data</span>
+            <h2>Daftar warga</h2>
+            <span className="sort-text">Nama A–Z ▾</span>
           </div>
 
-          {/* Warga List & Cards */}
+          {/* List Warga (Dari Supabase) */}
           <div className="warga-list">
             {isLoading ? (
-              // Loading Skeleton State
-              [1, 2, 3].map((n) => (
-                <div key={n} className="warga-card" style={{ opacity: 0.6 }}>
-                  <div className="avatar-warga" style={{ background: "#cbd5e1" }}>...</div>
-                  <div className="warga-info">
-                    <div style={{ width: "120px", height: "14px", background: "#cbd5e1", borderRadius: "4px", marginBottom: "8px" }}></div>
-                    <div style={{ width: "180px", height: "10px", background: "#e2e8f0", borderRadius: "4px" }}></div>
-                  </div>
-                </div>
-              ))
+              <div className="empty-search">Memuat data dari database...</div>
             ) : filteredWarga.length > 0 ? (
-              // Data Muncul dari Database
-              filteredWarga.map((warga, index) => {
-                // Ambil inisial nama untuk Avatar
-                const initials = warga.nama_lengkap
-                  ? warga.nama_lengkap.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase()
-                  : "W";
-
-                return (
-                  <div key={warga.id || index} className="warga-card">
-                    <div className="avatar-warga">{initials}</div>
-                    <div className="warga-info">
-                      <h3>{warga.nama_lengkap}</h3>
-                      <p>{warga.alamat} • Jumlah Tanggungan: {warga.jumlah_anggota || 1} orang</p>
-                      <span className="phone">📞 {warga.no_hp || "-"}</span>
-                    </div>
+              filteredWarga.map((warga, index) => (
+                // Menggunakan kombinasi index jika id belum terbentuk sempurna
+                <Link href={`/data-keluarga/${warga.id}`} key={warga.id || index} className="warga-card">
+                  <div className="avatar-warga">{getInitials(warga.nama_lengkap)}</div>
+                  <div className="warga-info">
+                    <h3>{warga.nama_lengkap}</h3>
+                    <p>{warga.alamat} • {warga.jumlah_anggota || 1} Anggota</p>
+                    <span className="phone">{warga.no_hp}</span>
                   </div>
-                );
-              })
+                </Link>
+              ))
             ) : (
-              // Empty State (Jika pencarian tidak ditemukan)
               <div className="empty-search">
-                <p>Yah, warga yang kamu cari tidak ditemukan.</p>
-                <button 
-                  onClick={() => setSearchQuery("")} 
-                  style={{ marginTop: "8px", padding: "6px 14px", background: "#0F172A", color: "white", border: "none", borderRadius: "8px", cursor: "pointer", fontSize: "12px", fontWeight: "600" }}
-                >
-                  Reset Pencarian
-                </button>
+                Pencarian "{searchQuery}" tidak ditemukan.
               </div>
             )}
           </div>
 
-        </div>
+        </section>
       </main>
     </div>
   );
