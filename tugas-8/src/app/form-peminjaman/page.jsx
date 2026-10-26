@@ -6,13 +6,11 @@ import Link from 'next/link';
 import { createClient } from '@supabase/supabase-js';
 import './form-peminjaman.css';
 
-// Inisialisasi Supabase
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
-// 1. Pindahkan logika utama ke dalam komponen internal ini
 function FormPeminjamanContent() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const searchParams = useSearchParams();
@@ -24,7 +22,6 @@ function FormPeminjamanContent() {
     image: '/kursilipat.png'
   });
 
-  // State untuk form input database
   const [formData, setFormData] = useState({
     tanggal_pinjam: '',
     tanggal_kembali: '',
@@ -60,7 +57,6 @@ function FormPeminjamanContent() {
     }
   }, [searchParams]);
 
-  // --- EVENT HANDLERS & SUPABASE INSERT ---
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -84,7 +80,6 @@ function FormPeminjamanContent() {
 
   return (
     <div className="mobile-wrapper">
-      {/* Header */}
       <div className="header">
         <Link href="/katalog" className="back-btn">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A365D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -99,7 +94,6 @@ function FormPeminjamanContent() {
       <hr className="divider" />
 
       <div className="content-area">
-        {/* Card Aset Dipilih */}
         <div className="asset-card">
           <img src={assetData.image} alt={assetData.name} className="asset-img" />
           <div className="asset-info">
@@ -109,7 +103,6 @@ function FormPeminjamanContent() {
           </div>
         </div>
 
-        {/* Form Inputs */}
         {!isSubmitted ? (
           <form id="formPeminjaman" onSubmit={handleSubmit}>
             <div className="date-row">
@@ -174,7 +167,6 @@ function FormPeminjamanContent() {
             </div>
           </form>
         ) : (
-          /* Status Ticket - Tampil Setelah Berhasil Submit */
           <>
             <div id="statusTicket" className="status-ticket">
               <div className="ticket-header">
@@ -209,7 +201,6 @@ function FormPeminjamanContent() {
         <div style={{ height: '80px' }}></div>
       </div>
 
-      {/* Bottom Nav */}
       <div className="bottom-nav">
         <Link href="/dashboard" className="nav-item">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -230,7 +221,6 @@ function FormPeminjamanContent() {
   );
 }
 
-// 2. Komponen utama yang dibungkus dengan Suspense boundary
 export default function FormPeminjaman() {
   return (
     <Suspense fallback={<div style={{ textAlign: 'center', padding: '2rem' }}>Memuat halaman...</div>}>
