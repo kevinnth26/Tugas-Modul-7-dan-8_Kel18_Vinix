@@ -1,11 +1,52 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { supabase } from '../../lib/supabase';
 import './jadwal.css';
 
 export default function JadwalKegiatan() {
   const router = useRouter();
+
+  // States untuk Supabase
+  const [jadwalList, setJadwalList] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Ambil data jadwal dari Supabase
+  const fetchJadwal = async () => {
+    setLoading(true);
+    // Ganti nama tabel di bawah jika nama tabel di Supabase Anda berbeda (misal: 'agenda' atau 'kegiatan')
+    const { data, error } = await supabase.from('agenda_kegiatan').select('*').order('id', { ascending: true });
+    
+    if (error) {
+      console.error('Gagal memuat jadwal:', error);
+    } else {
+      const formattedData = (data || []).map((item) => {
+        // Mengantisipasi berbagai macam nama kolom agar tidak undefined
+        const judul = item.nama_kegiatan || item.judul || item.kegiatan || 'Kegiatan Warga';
+        const waktuKet = item.waktu || item.jam || '07.00 • Titik kumpul Pos RT';
+        const tgl = item.tanggal || item.tgl || '11';
+        const bln = item.bulan || item.bln || 'OKT';
+        const statusVal = item.status || 'Terjadwal';
+
+        return {
+          id: item.id,
+          tanggal: tgl,
+          bulan: bln,
+          judul: judul,
+          deskripsi: waktuKet,
+          status: statusVal
+        };
+      });
+      setJadwalList(formattedData);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchJadwal();
+  }, []);
 
   return (
     <div className="app" id="app">
@@ -28,7 +69,7 @@ export default function JadwalKegiatan() {
             </div>
           </header>
 
-          {/* Kalender Card */}
+          {/* Kalender Card (Desain Asli Tetap Aman) */}
           <div className="calendar-card">
             <div className="calendar-header">
               <svg className="nav-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -52,48 +93,28 @@ export default function JadwalKegiatan() {
             </div>
           </div>
 
-          {/* List Kegiatan */}
-          <div className="list-card">
-            <div className="list-item">
-              <div className="date-box">
-                <span className="date-num">11</span>
-                <span className="date-month">OKT</span>
+          {/* List Kegiatan Dinamis dari Database Supabase */}
+          {loading ? (
+            <p style={{ padding: '20px', textAlign: 'center', color: '#666' }}>Memuat jadwal...</p>
+          ) : jadwalList.length === 0 ? (
+            <p style={{ padding: '20px', textAlign: 'center', color: '#666' }}>Belum ada jadwal kegiatan tercatat.</p>
+          ) : (
+            jadwalList.map((item) => (
+              <div className="list-card" key={item.id}>
+                <div className="list-item">
+                  <div className="date-box">
+                    <span className="date-num">{item.tanggal}</span>
+                    <span className="date-month">{item.bulan}</span>
+                  </div>
+                  <div className="item-details">
+                    <h4>{item.judul}</h4>
+                    <p>{item.deskripsi}</p>
+                  </div>
+                  <div className="badge">{item.status}</div>
+                </div>
               </div>
-              <div className="item-details">
-                <h4>Kerja Bakti Lingkungan</h4>
-                <p>07.00 • Titik kumpul Pos RT</p>
-              </div>
-              <div className="badge">Terjadwal</div>
-            </div>
-          </div>
-
-          <div className="list-card">
-            <div className="list-item">
-              <div className="date-box">
-                <span className="date-num">16</span>
-                <span className="date-month">OKT</span>
-              </div>
-              <div className="item-details">
-                <h4>Rapat Warga</h4>
-                <p>19.00 • Titik kumpul Pos RT</p>
-              </div>
-              <div className="badge">Terjadwal</div>
-            </div>
-          </div>
-
-          <div className="list-card">
-            <div className="list-item">
-              <div className="date-box">
-                <span className="date-num">25</span>
-                <span className="date-month">OKT</span>
-              </div>
-              <div className="item-details">
-                <h4>Kerja Bakti Lingkungan</h4>
-                <p>07.00 • Titik kumpul Pos RT</p>
-              </div>
-              <div className="badge">Terjadwal</div>
-            </div>
-          </div>
+            ))
+          )}
 
         </section>
       </main>
