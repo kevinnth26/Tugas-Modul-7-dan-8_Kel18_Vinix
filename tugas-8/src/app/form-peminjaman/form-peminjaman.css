@@ -12,8 +12,14 @@ body { background-color: #E5E7EB; display: flex; justify-content: center; align-
     .mobile-wrapper { min-height: 100vh; border-radius: 0; } body { padding: 0; }
 }
 
-.content-area { flex: 1; overflow-y: auto; overflow-x: hidden; padding: 1.25rem; background-color: #F9FAFB; }
-
+.content-area { 
+    flex: 1; 
+    overflow-y: auto; 
+    overflow-x: hidden; 
+    padding: 1.25rem; 
+    padding-bottom: 5rem; /* Tambahkan baris ini supaya konten bawah tidak tertutup navbar */
+    background-color: #F9FAFB; 
+}
 /* Header */
 .header { display: flex; align-items: center; gap: 15px; padding: 2rem 1.25rem 1rem 1.25rem; background: white; }
 .back-btn { display: flex; align-items: center; justify-content: center; text-decoration: none; cursor: pointer; }

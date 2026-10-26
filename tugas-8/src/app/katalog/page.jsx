@@ -1,28 +1,69 @@
-"use client"; // Wajib karena kita menggunakan interaksi klik dan state
+"use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { createClient } from '@supabase/supabase-js';
 import './katalog.css';
 
+// Inisialisasi Supabase
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
+
 export default function Katalog() {
-  // 1. STATE UNTUK TAB AKTIF
-  // Secara default, tab yang aktif adalah 'semua'
   const [activeTab, setActiveTab] = useState('semua');
+  const [items, setItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  // 2. DATA ASET (Sementara kita taruh di sini sebelum pakai Database)
-  const items = [
-    { id: 1, name: 'Kursi Lipat', image: '/assets/images/kursilipat.png', status: '24 unit tersedia', isAvailable: true },
-    { id: 2, name: 'Meja Panjang', image: '/assets/images/mejapanjang.png', status: '8 unit tersedia', isAvailable: true },
-    { id: 3, name: 'Pengeras Suara', image: '/assets/images/pengerassuara.png', status: '2 unit tersedia', isAvailable: true },
-    { id: 4, name: 'Tenda', image: '/assets/images/tenda.png', status: 'Sedang dipinjam', isAvailable: false },
-  ];
+  // Ambil data inventaris dari Supabase saat halaman dimuat
+  useEffect(() => {
+    fetchInventaris();
+  }, []);
 
-  // 3. LOGIKA FILTER
-  // Ini yang menggantikan fungsi 3 file HTML Anda!
+  const fetchInventaris = async () => {
+    const { data, error } = await supabase
+      .from('inventaris')
+      .select('*');
+
+    if (error) {
+      console.error('Gagal mengambil data inventaris:', error.message);
+    } else if (data) {
+      // Format data dari Supabase agar sesuai dengan struktur tampilan katalog
+      const formattedItems = data.map((item) => {
+       // Tentukan apakah barang tersedia berdasarkan stok_tersedia dari Supabase
+const stok = item.stok_tersedia !== undefined ? item.stok_tersedia : item.total_stok;
+const isAvailable = stok > 0;
+        
+        // Pemetaan gambar berdasarkan nama barang atau default
+        let imagePath = '/kursilipat.png';
+        const namaLower = item.nama_barang ? item.nama_barang.toLowerCase().trim() : '';
+        
+        if (namaLower.includes('meja')) {
+          imagePath = '/mejapanjang.png';
+        } else if (namaLower.includes('suara') || namaLower.includes('sound') || namaLower.includes('speaker')) {
+          imagePath = '/pengerassuara.png';
+        } else if (namaLower.includes('tenda') || namaLower.includes('dome')) {
+          imagePath = '/tenda.png';
+        }
+        return {
+          id: item.id,
+          name: item.nama_barang || 'Aset Warga',
+          image: imagePath,
+          status: isAvailable ? `${stok} unit tersedia` : 'Sedang dipinjam',
+          isAvailable: isAvailable
+        };
+      });
+      setItems(formattedItems);
+    }
+  };
+
+  // Logika Filter & Pencarian
   const filteredItems = items.filter(item => {
-    if (activeTab === 'tersedia') return item.isAvailable === true;
-    if (activeTab === 'dipinjam') return item.isAvailable === false;
-    return true; // Jika tab 'semua', tampilkan semua
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+    if (activeTab === 'tersedia') return matchesSearch && item.isAvailable === true;
+    if (activeTab === 'dipinjam') return matchesSearch && item.isAvailable === false;
+    return matchesSearch;
   });
 
   return (
@@ -47,12 +88,17 @@ export default function Katalog() {
               <circle cx="11" cy="11" r="8"/>
               <line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
-            <input type="text" className="search-input" placeholder="Cari aset warga..." />
+            <input 
+              type="text" 
+              className="search-input" 
+              placeholder="Cari aset warga..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </div>
 
           {/* TAB FILTER DINAMIS */}
           <div className="tabs">
-            {/* Menggunakan onClick untuk mengubah state, dan class berubah otomatis */}
             <span 
               className={`tab-pill ${activeTab === 'semua' ? 'active' : ''}`} 
               onClick={() => setActiveTab('semua')}
@@ -76,7 +122,7 @@ export default function Katalog() {
             </span>
           </div>
 
-          {/* GRID KATALOG MENGGUNAKAN LOOPING (.map) */}
+          {/* GRID KATALOG */}
           <div className="katalog-grid">
             {filteredItems.map((item) => (
               <div className="katalog-card" key={item.id}>
@@ -89,8 +135,8 @@ export default function Katalog() {
                   
                   {item.isAvailable ? (
                     <Link href={`/form-peminjaman?id=${item.id}&name=${encodeURIComponent(item.name)}&status=${encodeURIComponent(item.status)}`} style={{ textDecoration: 'none' }}>
-  <button className="btn-pinjam active">Pinjam</button>
-</Link>
+                      <button className="btn-pinjam active">Pinjam</button>
+                    </Link>
                   ) : (
                     <button className="btn-pinjam disabled" disabled>Pinjam</button>
                   )}
