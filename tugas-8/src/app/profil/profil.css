@@ -1,42 +1,28 @@
 /* =========================================================
-   1. KERANGKA LAYAR UTAMA (Curved & Centered)
+   1. KERANGKA LAYAR UTAMA (Responsive & Edge-to-edge)
    ========================================================= */
 body {
-  background-color: #e2e8f0 !important;
+  background-color: #e2e8f0;
   margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
 }
 
-.app {
-  background-color: #f8fafc !important; /* Warna abu-abu sangat terang */
-  color: #1e293b !important;
+.app-profil {
+  background-color: #f8fafc; 
+  color: #1e293b;
   width: 100%;
-  max-width: 393px !important;
-  height: 852px;
-  max-height: 90vh;
-  margin: 20px auto !important;
-  border-radius: 36px !important; /* Membuat sudut layar HP melengkung */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-  overflow: hidden;
+  max-width: 480px; /* Lebar maksimal di desktop */
+  min-height: 100vh; /* Memanjang penuh ke bawah */
+  margin: 0 auto; /* Tengah di desktop, menempel pinggir di mobile */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
   position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-.app main {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
 }
 
 .view-profil {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex: 1; /* Mendorong tabbar ke bagian bawah layar */
 }
 
 /* =========================================================
@@ -49,6 +35,8 @@ body {
   display: flex; 
   flex-direction: column; 
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 .hero__title { 
   align-self: flex-start; 
@@ -80,8 +68,8 @@ body {
   display: inline-flex; 
   align-items: center; 
   gap: 6px;
-  background: #d1fae5; /* Background Hijau Transparan */
-  color: #059669; /* Teks Hijau Tua */
+  background: #d1fae5; 
+  color: #059669; 
   border-radius: 999px; 
   padding: 6px 14px; 
   font-size: 12px; 
@@ -96,7 +84,6 @@ body {
   display: flex; 
   flex-direction: column; 
   gap: 14px; 
-  flex: 1; 
 }
 .sheet__title { 
   font-size: 20px; 
@@ -125,6 +112,10 @@ body {
   text-decoration: none;
   cursor: pointer;
   box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+.menu-card:active {
+  transform: scale(0.98);
 }
 .menu-card__icon {
   width: 44px; 
@@ -189,8 +180,11 @@ body {
   align-items: center;
   background: #fff;
   border-top: 1px solid #e2e8f0;
-  padding: 12px 0 24px 0; /* Padding ekstra di bawah untuk area lengkungan */
-  flex-shrink: 0;
+  padding: 12px 0 16px 0;
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  z-index: 10;
 }
 .tabbar__item {
   display: flex;

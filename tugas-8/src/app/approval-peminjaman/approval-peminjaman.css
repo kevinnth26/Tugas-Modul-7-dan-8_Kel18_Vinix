@@ -1,26 +1,19 @@
 /* =========================================================
-   1. KERANGKA LAYAR UTAMA (Standar)
+   1. KERANGKA LAYAR UTAMA (Standar Konsisten 480px & Full-height)
    ========================================================= */
 body {
-  background-color: #e2e8f0 !important;
+  background-color: #e2e8f0;
   margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
 }
 
 .app {
-  background-color: #f8fafc !important; 
-  color: #1e293b !important;
+  background-color: #f8fafc; 
+  color: #1e293b;
   width: 100%;
-  max-width: 393px !important;
-  height: 852px;
-  max-height: 90vh;
-  margin: 20px auto !important;
-  border-radius: 36px !important; 
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-  overflow: hidden;
+  max-width: 480px; /* Disamakan menjadi lebar 480px untuk desktop */
+  min-height: 100vh; /* Memanjang dari ujung atas ke ujung bawah layar */
+  margin: 0 auto; /* Tengah secara horizontal di desktop */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -28,7 +21,6 @@ body {
 
 .app main {
   flex: 1;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
@@ -36,7 +28,7 @@ body {
 .view-approval {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex: 1; /* Mendorong footer-note ke bawah */
   padding: 0 24px 24px 24px; 
   box-sizing: border-box;
 }
@@ -135,7 +127,6 @@ body {
 .request-tag { 
   font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; 
 }
-/* Warna tag mengikuti tab yang aktif */
 .tag-menunggu { color: #b45309; background-color: #fef3c7; }
 .tag-diterima { color: #059669; background-color: #d1fae5; }
 .tag-ditolak { color: #dc2626; background-color: #fee2e2; }
@@ -152,7 +143,6 @@ body {
   display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; 
 }
 .user-info { display: flex; align-items: center; gap: 12px; }
-/* Ubah nama class avatar agar tidak tabrakan dengan Profil/Dashboard */
 .avatar-approval { 
   width: 36px; height: 36px; border-radius: 50%; background-color: #f1f5f9; 
   color: #1A365D; font-weight: 700; font-size: 13px; 
@@ -195,10 +185,10 @@ body {
 /* =========================================================
    7. FOOTER NOTE & EMPTY STATE
    ========================================================= */
-.empty-state { text-align: center; padding: 32px 16px; color: #64748b; font-size: 13px; }
+.empty-state { text-align: center; padding: 32px 16px; color: #64748b; font-size: 13px; margin-top: 20px;}
 .footer-note { 
   display: flex; align-items: flex-start; gap: 10px; color: #475569; 
-  font-size: 12px; padding: 0 4px; line-height: 1.4; margin-top: auto;
+  font-size: 12px; padding: 0 4px; line-height: 1.4; margin-top: auto; /* Mendorong ini ke bagian bawah */
 }
 .info-circle-svg { flex-shrink: 0; color: #1A365D; margin-top: 2px;}
 

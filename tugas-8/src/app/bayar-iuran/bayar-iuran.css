@@ -1,29 +1,19 @@
 /* =========================================================
-   1. PENGATURAN LAYAR UTAMA (Desktop & Kerangka HP Curved)
+   1. PENGATURAN LAYAR UTAMA (Responsive & Konsisten)
    ========================================================= */
 body {
-  background-color: #e2e8f0 !important; /* Warna luar frame */
+  background-color: #e2e8f0; 
   margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
 }
 
 .app {
-  background-color: #f8fafc !important; /* Warna dalam aplikasi */
-  color: #1e293b !important;
+  background-color: #f8fafc; 
+  color: #1e293b;
   width: 100%;
-  max-width: 393px !important; /* Ukuran frame HP standar */
-  height: 852px;
-  max-height: 90vh; /* Memberi jarak aman dari atas/bawah browser */
-  margin: 20px auto !important;
-  
-  /* INI YANG MEMBUAT SUDUTNYA MELENGKUNG (CURVED) */
-  border-radius: 36px !important; 
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-  overflow: hidden; /* Memastikan isi tidak keluar dari lengkungan */
-  
+  max-width: 480px; /* Disamakan dengan page lainnya */
+  min-height: 100vh; /* Memanjang penuh ke bawah */
+  margin: 0 auto; /* Tengah di desktop, menempel pinggir di mobile */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -31,7 +21,6 @@ body {
 
 .app main {
   flex: 1;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
@@ -39,13 +28,13 @@ body {
 .view {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  padding: 24px; /* Ruang bernapas yang lega */
+  flex: 1; /* Mendorong tombol kirim ke bawah */
+  padding: 24px; 
   box-sizing: border-box;
 }
 
 /* =========================================================
-   2. HEADER / APPBAR (Teks & Tombol Kembali)
+   2. HEADER / APPBAR
    ========================================================= */
 .appbar {
   display: flex;
@@ -84,8 +73,8 @@ body {
 #form-iuran {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  gap: 20px; /* Jarak antar elemen (kartu tagihan, bank, input) */
+  flex: 1; /* Penting agar gap dan auto margin bekerja */
+  gap: 20px; 
 }
 .field {
   display: flex;
@@ -122,9 +111,9 @@ body {
   font-weight: 700;
   font-size: 12px;
 }
-.bill__name { font-size: 16px; font-weight: 700; margin: 16px 0 4px 0; color: #fff !important; }
-.bill__amount { font-size: 32px; font-weight: 800; line-height: 1.2; margin: 0 0 8px 0; color: #fff !important; }
-.bill__due { font-size: 12px; color: #cbd5e1 !important; margin: 0; }
+.bill__name { font-size: 16px; font-weight: 700; margin: 16px 0 4px 0; color: #fff; }
+.bill__amount { font-size: 32px; font-weight: 800; line-height: 1.2; margin: 0 0 8px 0; color: #fff; }
+.bill__due { font-size: 12px; color: #cbd5e1; margin: 0; }
 
 /* =========================================================
    5. KARTU REKENING BANK
@@ -182,7 +171,7 @@ body {
 .input:focus { border-color: #1A365D; box-shadow: 0 0 0 3px rgba(26, 54, 93, 0.1); }
 
 /* =========================================================
-   7. UPLOAD BUKTI (DROPZONE) - DIPERBESAR SESUAI CONTOH
+   7. UPLOAD BUKTI (DROPZONE)
    ========================================================= */
 .dropzone {
   display: flex;
@@ -190,9 +179,9 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 120px; /* KOTAK SEKARANG BESAR DAN LEGA */
+  min-height: 120px; 
   background-color: #ffffff;
-  border: 2px dashed #94a3b8; /* BORDER PUTUS-PUTUS */
+  border: 2px dashed #94a3b8; 
   border-radius: 12px;
   padding: 20px;
   box-sizing: border-box;
@@ -228,10 +217,8 @@ body {
   color: #1A365D;
   line-height: 1.4;
   margin-top: -4px;
+  margin-bottom: 24px;
 }
-
-/* Memaksa tombol ke bagian paling bawah aplikasi */
-#btn-kirim-iuran { margin-top: auto; }
 
 .btn {
   display: flex;
@@ -246,8 +233,13 @@ body {
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
+  margin-top: auto; /* Memaksa tombol ini selalu berada di paling bawah layar */
 }
 .btn--primary {
   background-color: #1A365D;
   color: #ffffff;
+}
+.btn--disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }

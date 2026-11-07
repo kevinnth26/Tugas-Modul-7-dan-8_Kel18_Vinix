@@ -21,12 +21,12 @@ export default function DashboardAdmin() {
           
           <header className="appbar">
             {/* Tombol Back */}
-            <button className="appbar__back" onClick={() => router.back()} aria-label="Kembali">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12" />
-                <polyline points="12 19 5 12 12 5" />
-              </svg>
-            </button>
+            <Link className="appbar__back" href="/dashboard" aria-label="Kembali ke Dashboard">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <line x1="19" y1="12" x2="5" y2="12" />
+    <polyline points="12 19 5 12 12 5" />
+  </svg>
+</Link>
             <div className="appbar__text">
               <h1>Dashboard Admin</h1>
               <p>Ringkasan RT 01/RW 02</p>
@@ -87,7 +87,7 @@ export default function DashboardAdmin() {
             <div>
               <div className="row-between">
                 <h2 className="section-title">Aktivitas Terbaru</h2>
-                <Link className="link-btn" href="/aktivitas-terbaru">Lihat semua</Link>
+                <Link className="link-btn" href="/aktivitas-baru">Lihat semua</Link>
               </div>
               <ul className="activity">
                 {activities.map(act => (

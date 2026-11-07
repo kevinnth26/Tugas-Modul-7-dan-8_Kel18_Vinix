@@ -1,19 +1,61 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { supabase } from '../../lib/supabase'; // Sesuaikan path ke supabase.js Anda
 import './detail-profil.css';
 
 export default function DetailProfil() {
   const router = useRouter();
   
+  // State untuk form input nama dan email
+  const [nama, setNama] = useState('');
+  const [email, setEmail] = useState('');
+  
   // State untuk mengatur visibilitas password
   const [showSandiLama, setShowSandiLama] = useState(false);
   const [showSandiBaru, setShowSandiBaru] = useState(false);
 
+  // Ambil data user yang sedang login dari Supabase saat halaman dimuat
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
+        
+        if (authError) throw authError;
+
+        if (user) {
+          // Ambil email langsung dari objek Auth Supabase
+          if (user.email) {
+            setEmail(user.email);
+          }
+
+          // Cek nama lengkap dari metadata Auth atau tabel warga
+          if (user.user_metadata && user.user_metadata.full_name) {
+            setNama(user.user_metadata.full_name.trim());
+          } else if (user.email) {
+            const { data, error } = await supabase
+              .from('warga')
+              .select('nama_lengkap')
+              .eq('email', user.email)
+              .maybeSingle();
+
+            if (!error && data && data.nama_lengkap) {
+              setNama(data.nama_lengkap.trim());
+            }
+          }
+        }
+      } catch (error) {
+        console.warn("Info: Gagal mengambil data profil. Menggunakan data kosong/default.");
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Logika penyimpanan data/API akan ada di sini
+    // Logika penyimpanan data/API update ke Supabase bisa ditambahkan di sini
     alert("Profil berhasil diperbarui!");
     router.back();
   };
@@ -51,7 +93,15 @@ export default function DetailProfil() {
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                     <circle cx="12" cy="7" r="4"/>
                   </svg>
-                  <input id="f-nama" name="nama" type="text" autoComplete="off" defaultValue="Budi Santoso" placeholder="Masukkan nama" />
+                  <input 
+                    id="f-nama" 
+                    name="nama" 
+                    type="text" 
+                    autoComplete="off" 
+                    value={nama} 
+                    onChange={(e) => setNama(e.target.value)}
+                    placeholder="Masukkan nama" 
+                  />
                 </div>
               </div>
 
@@ -62,7 +112,15 @@ export default function DetailProfil() {
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
                     <polyline points="22,6 12,13 2,6"/>
                   </svg>
-                  <input id="f-email" name="email" type="email" autoComplete="off" defaultValue="budi.santoso@surat.id" placeholder="Masukkan email" />
+                  <input 
+                    id="f-email" 
+                    name="email" 
+                    type="email" 
+                    autoComplete="off" 
+                    value={email} 
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Masukkan email" 
+                  />
                 </div>
               </div>
             </fieldset>

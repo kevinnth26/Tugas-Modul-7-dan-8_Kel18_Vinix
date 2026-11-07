@@ -75,7 +75,7 @@ export default function SignUp() {
 
   return (
     <>
-      <div className="mobile-wrapper">
+      <div className="signup-wrapper">
         <div className="header">
           <Link href="/signin" className="back-btn">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A365D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

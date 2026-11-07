@@ -1,26 +1,19 @@
 /* =========================================================
-   1. KERANGKA LAYAR UTAMA (Standar)
+   1. KERANGKA LAYAR UTAMA (Standar Konsisten 480px & Full-height)
    ========================================================= */
 body {
-  background-color: #e2e8f0 !important;
+  background-color: #e2e8f0;
   margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
 }
 
 .app {
-  background-color: #f8fafc !important; 
-  color: #1e293b !important;
+  background-color: #f8fafc; 
+  color: #1e293b;
   width: 100%;
-  max-width: 393px !important;
-  height: 852px;
-  max-height: 90vh;
-  margin: 20px auto !important;
-  border-radius: 36px !important; 
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-  overflow: hidden;
+  max-width: 480px; /* Disamakan menjadi lebar 480px untuk desktop */
+  min-height: 100vh; /* Memanjang dari ujung atas ke ujung bawah layar */
+  margin: 0 auto; /* Tengah secara horizontal di desktop */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
   position: relative;
   display: flex;
   flex-direction: column;
@@ -28,7 +21,6 @@ body {
 
 .app main {
   flex: 1;
-  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
@@ -36,7 +28,7 @@ body {
 .view-datawarga {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex: 1;
   padding: 0 24px 24px 24px; 
   box-sizing: border-box;
 }

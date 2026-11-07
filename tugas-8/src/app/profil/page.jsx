@@ -2,106 +2,148 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { supabase } from '../../lib/supabase'; // Pastikan path ke supabase.js ini benar
 import './profil.css';
 
 export default function Profil() {
   const router = useRouter();
+  
+  // State untuk menyimpan nama lengkap dan inisial
+  const [fullName, setFullName] = useState("-"); // Default nama
+  const [initial, setInitial] = useState("-"); // Default inisial
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
+        
+        if (authError) throw authError;
+
+        if (user) {
+          let fetchedName = "";
+
+          // Coba ambil dari metadata Auth terlebih dahulu
+          if (user.user_metadata && user.user_metadata.full_name) {
+             fetchedName = user.user_metadata.full_name.trim();
+          } else if (user.email) {
+             // Jika tidak ada di metadata, coba cari di tabel warga berdasarkan email
+             const { data, error } = await supabase
+               .from('warga')
+               .select('nama_lengkap')
+               .eq('email', user.email)
+               .maybeSingle();
+
+             if (!error && data && data.nama_lengkap) {
+                fetchedName = data.nama_lengkap.trim();
+             }
+          }
+
+          // Jika berhasil mendapatkan nama, update state fullName dan inisialnya
+          if (fetchedName) {
+             setFullName(fetchedName);
+             setInitial(fetchedName.charAt(0).toUpperCase());
+          }
+        }
+      } catch (error) {
+        console.warn("Info: Gagal mengambil data user profil. Menggunakan nama default.");
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
 
   const handleSignOut = () => {
-    // Logika hapus sesi/token akan ada di sini nanti
-    // Setelah sign out, arahkan pengguna kembali ke halaman Sign In
     router.push('/signin');
   };
 
   return (
-    <div className="app" id="app">
-      <main id="main">
-        <section className="view-profil" aria-label="Profil Saya">
+    <div className="app-profil">
+      <main className="view-profil">
+        
+        {/* Bagian Atas: Profil Hero */}
+        <header className="hero">
+          <h1 className="hero__title">Profil Saya</h1>
           
-          {/* Bagian Atas: Profil Hero */}
-          <header className="hero">
-            <h1 className="hero__title">Profil Saya</h1>
-            <div className="avatar-profil" aria-hidden="true">B</div>
-            <p className="hero__name">Budi Santoso</p>
-            <span className="badge-verified">
-              {/* Icon Shield Verified */}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                <path d="M9 12l2 2 4-4"/>
+          {/* Avatar Dinamis */}
+          <div className="avatar-profil" aria-hidden="true">{initial}</div>
+          
+          {/* Nama Lengkap Dinamis */}
+          <p className="hero__name">{fullName}</p>
+          
+          <span className="badge-verified">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+            Warga terverifikasi
+          </span>
+        </header>
+
+        {/* Bagian Tengah: Menu Kelola Akun */}
+        <div className="sheet">
+          <h2 className="sheet__title">Kelola akun</h2>
+          <p className="lead">Perbarui data pribadi dan akses layanan pengaduan warga.</p>
+
+          <Link className="menu-card" href="/detail-profil">
+            <span className="menu-card__icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
               </svg>
-              Warga terverifikasi
             </span>
-          </header>
+            <span className="menu-card__text">
+              <strong>Detail Profil</strong>
+              <small>Periksa dan ubah data diri</small>
+            </span>
+            <svg className="menu-card__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </Link>
 
-          {/* Bagian Tengah: Menu Kelola Akun */}
-          <div className="sheet">
-            <h2 className="sheet__title">Kelola akun</h2>
-            <p className="lead">Perbarui data pribadi dan akses layanan pengaduan warga.</p>
-
-            <Link className="menu-card" href="/detail-profil">
-              <span className="menu-card__icon">
-                {/* Icon Users */}
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-              </span>
-              <span className="menu-card__text">
-                <strong>Detail Profil</strong>
-                <small>Periksa dan ubah data diri</small>
-              </span>
-              <svg className="menu-card__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 18 15 12 9 6"/>
+          <Link className="menu-card" href="/pengaduan">
+            <span className="menu-card__icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
               </svg>
-            </Link>
+            </span>
+            <span className="menu-card__text">
+              <strong>Pengaduan</strong>
+              <small>Kirim laporan kepada pengurus</small>
+            </span>
+            <svg className="menu-card__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </Link>
 
-            <Link className="menu-card" href="/pengaduan">
-              <span className="menu-card__icon">
-                {/* Icon Pengaduan / Message */}
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                </svg>
-              </span>
-              <span className="menu-card__text">
-                <strong>Pengaduan</strong>
-                <small>Kirim laporan kepada pengurus</small>
-              </span>
-              <svg className="menu-card__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 18 15 12 9 6"/>
+          {/* Tombol Sign Out (Warna Merah) */}
+          <button type="button" className="menu-card menu-card--danger" onClick={handleSignOut}>
+            <span className="menu-card__icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="3 6 5 6 21 6"/>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
               </svg>
-            </Link>
+            </span>
+            <span className="menu-card__text">
+              <strong>Sign Out</strong>
+              <small>Keluar dari akun ini</small>
+            </span>
+            <svg className="menu-card__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </button>
 
-            {/* Tombol Sign Out (Warna Merah) */}
-            <button type="button" className="menu-card menu-card--danger" onClick={handleSignOut}>
-              <span className="menu-card__icon">
-                {/* Icon Trash */}
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="3 6 5 6 21 6"/>
-                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-                </svg>
-              </span>
-              <span className="menu-card__text">
-                <strong>Sign Out</strong>
-                <small>Keluar dari akun ini</small>
-              </span>
-              <svg className="menu-card__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="9 18 15 12 9 6"/>
-              </svg>
-            </button>
-
-            <p className="hint">
-              {/* Icon Info/Help */}
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-                <line x1="12" y1="17" x2="12.01" y2="17"/>
-              </svg>
-              <span>Pastikan data profil selalu terbaru agar layanan warga tetap tepat sasaran.</span>
-            </p>
-          </div>
-        </section>
+          <p className="hint">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <span>Pastikan data profil selalu terbaru agar layanan warga tetap tepat sasaran.</span>
+          </p>
+        </div>
       </main>
 
       {/* Bagian Bawah: Navigasi Tabbar */}
@@ -121,7 +163,6 @@ export default function Profil() {
           </svg>
           <span>Katalog</span>
         </Link>
-        {/* Atribut aria-current="page" digunakan untuk menandai halaman yang sedang aktif */}
         <Link className="tabbar__item" href="/profil" aria-current="page">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>

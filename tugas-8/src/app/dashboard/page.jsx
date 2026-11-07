@@ -1,8 +1,51 @@
+"use client";
+
 import Link from 'next/link';
+import { useState, useEffect } from "react";
+import { supabase } from "../../lib/supabase"; 
 // Ubah nama file CSS di bawah ini jika Anda me-rename index.css menjadi dashboard.css
 import './index.css'; 
 
 export default function Dashboard() {
+  const [firstName, setFirstName] = useState("Warga");
+  
+  useEffect(() => {
+    const fetchUserName = async () => {
+      try {
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
+        
+        if (authError) throw authError;
+
+        if (user) {
+          // Cek nama lengkap dari metadata Auth
+          if (user.user_metadata && user.user_metadata.full_name) {
+             const namaLengkap = user.user_metadata.full_name.trim();
+             setFirstName(namaLengkap.split(" ")[0]);
+          } else if (user.email) {
+             // Jika tidak ada di metadata, coba cari di tabel warga berdasarkan email
+             const { data, error } = await supabase
+               .from('warga')
+               .select('nama_lengkap')
+               .eq('email', user.email)
+               .maybeSingle();
+
+             if (!error && data && data.nama_lengkap) {
+                setFirstName(data.nama_lengkap.trim().split(" ")[0]);
+             }
+          }
+        }
+      } catch (error) {
+        console.warn("Info: Gagal mengambil data user (belum login/koneksi). Menggunakan nama default.");
+      }
+    };
+
+    fetchUserName();
+  }, []);
+
+  const today = new Date();
+  const options = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+  const formattedDate = today.toLocaleDateString('id-ID', options);
+
   return (
     <>
       <div className="dashboard-wrapper">
@@ -12,8 +55,9 @@ export default function Dashboard() {
           <div className="header-blue">
             <div className="user-info">
               <div>
-                <h1>Halo, Budi!</h1>
-                <p>Sabtu, 3 Oktober 2026</p>
+                {/* NAMA DAN TANGGAL DINAMIS */}
+                <h1>Halo, {firstName}!</h1>
+                <p>{formattedDate}</p>
               </div>
               <div className="avatar"></div>
             </div>
@@ -44,13 +88,13 @@ export default function Dashboard() {
                 <span>Bayar Iuran</span>
               </Link>
               <Link href="/katalog" className="action-btn" id="btnPinjam" style={{ textDecoration: 'none', color: 'inherit' }}>
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A365D" strokeWidth="2">
-    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
-    <line x1="12" y1="22.08" x2="12" y2="12" />
-  </svg>
-  <span>Pinjam Aset</span>
-</Link>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A365D" strokeWidth="2">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                  <line x1="12" y1="22.08" x2="12" y2="12" />
+                </svg>
+                <span>Pinjam Aset</span>
+              </Link>
               <Link href="/dashboard-admin" className="action-btn" id="btnAdminPanel" style={{ textDecoration: 'none', color: 'inherit' }}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A365D" strokeWidth="2">
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />

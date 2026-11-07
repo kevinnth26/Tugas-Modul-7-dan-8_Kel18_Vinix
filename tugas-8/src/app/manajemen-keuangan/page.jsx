@@ -9,7 +9,6 @@ import './manajemen-keuangan.css';
 export default function ManajemenKeuangan() {
   const router = useRouter();
 
-  
   // States UI Asli
   const [showModal, setShowModal] = useState(false);
   const [fileName, setFileName] = useState("");
@@ -40,10 +39,10 @@ export default function ManajemenKeuangan() {
           id: item.id,
           type: statusVal === 'Lunas' || statusVal === 'Terverifikasi' ? 'income' : 'expense',
           title: `Kas - ${jenis}`,
-          desc: `Rp ${Number(jumlahVal).toLocaleString()}`,
+          desc: `Rp ${Number(jumlahVal).toLocaleString('id-ID')}`,
           status: statusVal,
           statusColor: statusVal === 'Lunas' || statusVal === 'Terverifikasi' ? 'text-green-bg' : 'text-yellow-bg',
-          amount: `Rp ${Number(jumlahVal).toLocaleString()}`,
+          amount: `Rp ${Number(jumlahVal).toLocaleString('id-ID')}`,
           amountColor: statusVal === 'Lunas' || statusVal === 'Terverifikasi' ? 'text-green' : 'text-red'
         };
       });
@@ -63,14 +62,29 @@ export default function ManajemenKeuangan() {
   };
   const triggerFileInput = () => fileInputRef.current.click();
 
-  // Handler Submit Form ke Database Supabase (Aman dari Foreign Key)
+  // Handler Perubahan Input Nominal (Hanya Angka & Auto Format "Rp")
+  const handleNominalChange = (e) => {
+    // Hapus semua karakter selain angka
+    const rawValue = e.target.value.replace(/[^0-9]/g, '');
+    
+    if (rawValue) {
+      // Format ke dalam ribuan (id-ID) dan tambahkan "Rp " di depannya
+      const formatted = "Rp " + parseInt(rawValue, 10).toLocaleString('id-ID');
+      setNominal(formatted);
+    } else {
+      setNominal('');
+    }
+  };
+
+  // Handler Submit Form ke Database Supabase
   const handleSaveExpense = async (e) => {
     e.preventDefault();
     
+    // Parse kembali nominal untuk membuang "Rp " dan titik sebelum masuk ke database
     const parsedNominal = parseFloat(nominal.replace(/[^0-9]/g, '')) || 0;
 
     try {
-      // 1. Ambil ID warga pertama yang ada di database untuk menghindari error Foreign Key
+      // 1. Ambil ID warga pertama yang ada di database
       const { data: wargaData, error: wargaError } = await supabase
         .from('warga')
         .select('id')
@@ -82,7 +96,7 @@ export default function ManajemenKeuangan() {
 
       const validWargaId = wargaData[0].id;
 
-      // 2. Simpan data pengeluaran dengan warga_id yang valid
+      // 2. Simpan data pengeluaran
       const { error } = await supabase.from('keuangan_iuran').insert([
         { 
           warga_id: validWargaId,
@@ -206,22 +220,23 @@ export default function ManajemenKeuangan() {
               
               <div className="form-row-group">
                 <div className="form-group flex-1">
-                  <label htmlFor="expenseNominal">Nominal</label>
+                  <label htmlFor="expenseNominal">Nominal <span className="text-red">*</span></label>
                   <input 
                     type="text" 
                     id="expenseNominal" 
-                    placeholder="Rp 0" 
+                    placeholder="Contoh: 150.000" 
                     value={nominal}
-                    onChange={(e) => setNominal(e.target.value)}
+                    onChange={handleNominalChange}
                     required 
                   />
                 </div>
                 <div className="form-group flex-1">
-                  <label htmlFor="expenseCategory">Kategori</label>
+                  <label htmlFor="expenseCategory">Kategori <span className="text-red">*</span></label>
                   <select 
                     id="expenseCategory"
                     value={kategori}
                     onChange={(e) => setKategori(e.target.value)}
+                    required
                   >
                     <option value="Perbaikan">Perbaikan</option>
                     <option value="Operasional">Operasional</option>
@@ -232,11 +247,11 @@ export default function ManajemenKeuangan() {
               </div>
 
               <div className="form-group">
-                <label htmlFor="expenseDesc">Deskripsi Pengeluaran</label>
+                <label htmlFor="expenseDesc">Deskripsi Pengeluaran <span className="text-red">*</span></label>
                 <input 
                   type="text" 
                   id="expenseDesc" 
-                  placeholder="Deskripsi" 
+                  placeholder="Contoh: Perbaikan lampu jalan depan blok B" 
                   value={deskripsi}
                   onChange={(e) => setDeskripsi(e.target.value)}
                   required 
