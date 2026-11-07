@@ -9,14 +9,15 @@ export default function BayarIuran() {
   const [fileName, setFileName] = useState("");
   const [isCopied, setIsCopied] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  
+  // State untuk input nominal dengan format awal "Rp 150.000"
+  const [nominal, setNominal] = useState("Rp 15.000");
   const fileInputRef = useRef(null);
 
   // --- HANDLERS ---
   const handleCopy = () => {
-    // Menyalin nomor rekening ke clipboard perangkat
     navigator.clipboard.writeText("00218834591");
     setIsCopied(true);
-    // Mengembalikan teks tombol copy setelah 2 detik
     setTimeout(() => setIsCopied(false), 2000);
   };
 
@@ -28,13 +29,32 @@ export default function BayarIuran() {
   };
 
   const triggerFileInput = () => {
-    // Memicu klik pada input file yang disembunyikan saat area dropzone diklik
     fileInputRef.current.click();
+  };
+
+  // Fungsi untuk memformat input agar hanya angka dan otomatis ada "Rp " + pemisah ribuan
+  const handleNominalChange = (e) => {
+    const rawValue = e.target.value.replace(/\D/g, "");
+    
+    if (rawValue === "") {
+      setNominal("Rp ");
+      return;
+    }
+
+    const formatted = new Intl.NumberFormat('id-ID').format(rawValue);
+    setNominal(`Rp ${formatted}`);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Di sini logika untuk mengirim data form & file bukti ke database
+    
+    // Validasi tambahan: pastikan nominal tidak kosong atau hanya berisi "Rp "
+    const rawDigits = nominal.replace(/\D/g, "");
+    if (!rawDigits || Number(rawDigits) === 0) {
+      alert("Mohon masukkan nominal pembayaran terlebih dahulu.");
+      return;
+    }
+
     setIsSubmitted(true);
   };
 
@@ -44,7 +64,6 @@ export default function BayarIuran() {
         <section className="view" aria-label="Bayar Iuran">
           
           <header className="appbar">
-            {/* Tombol kembali diarahkan ke dashboard */}
             <Link className="appbar__back" href="/dashboard" aria-label="Kembali">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12"/>
@@ -68,7 +87,7 @@ export default function BayarIuran() {
                 </span>
               </div>
               <p className="bill__name">Iuran RT - September 2026</p>
-              <p className="bill__amount">Rp 150.000</p>
+              <p className="bill__amount">Rp 15.000</p>
               <p className="bill__due">Batas Pembayaran 10 Oktober 2026</p>
             </article>
 
@@ -101,17 +120,19 @@ export default function BayarIuran() {
               </button>
             </div>
 
-            {/* Input Nominal */}
+            {/* Input Nominal Wajib Diisi (Required) */}
             <div className="field">
-              <label htmlFor="i-nominal">Nominal</label>
+              <label htmlFor="i-nominal">Nominal *</label>
               <input 
                 id="i-nominal" 
                 className="input" 
                 type="text" 
                 inputMode="numeric" 
-                defaultValue="Rp 150.000" 
+                value={nominal} 
+                onChange={handleNominalChange}
                 autoComplete="off" 
-                disabled={isSubmitted} // Disable jika sudah disubmit
+                required 
+                disabled={isSubmitted} 
               />
               <p className="error" id="err-nominal" role="alert"></p>
             </div>
@@ -119,8 +140,6 @@ export default function BayarIuran() {
             {/* Area Upload Bukti Transfer */}
             <div className="field">
               <label id="i-bukti-label">Bukti Pembayaran</label>
-              
-              {/* Input file asli (disembunyikan) */}
               <input 
                 type="file" 
                 id="i-bukti" 
@@ -130,8 +149,6 @@ export default function BayarIuran() {
                 disabled={isSubmitted}
                 hidden 
               />
-              
-              {/* Tombol visual yang menggantikan input file */}
               <button 
                 type="button" 
                 className="dropzone dropzone--lg" 
@@ -159,7 +176,6 @@ export default function BayarIuran() {
               <span>Konfirmasi akan diverifikasi pengurus maksimal 1 x 24 jam</span>
             </p>
 
-            {/* Tombol Submit dinamis */}
             <button 
               type="submit" 
               className={`btn btn--primary btn--icon ${isSubmitted ? 'btn--disabled' : ''}`} 
