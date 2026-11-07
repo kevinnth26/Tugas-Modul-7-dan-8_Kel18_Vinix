@@ -2,10 +2,62 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { supabase } from '../../lib/supabase'; // Sesuaikan path ke supabase.js Anda
 import './dashboard.css';
 
 export default function DashboardAdmin() {
   const router = useRouter();
+
+  // State untuk data dinamis pengguna
+  const [displayName, setDisplayName] = useState("Pak Budi");
+  const [initial, setInitial] = useState("B");
+  const [currentDate, setCurrentDate] = useState("");
+
+  useEffect(() => {
+    // 1. Ambil data user yang sedang login dari Supabase
+    const fetchAdminProfile = async () => {
+      try {
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
+        
+        if (authError) throw authError;
+
+        if (user) {
+          let fetchedName = "";
+
+          // Cek metadata auth
+          if (user.user_metadata && user.user_metadata.full_name) {
+             fetchedName = user.user_metadata.full_name.trim();
+          } else if (user.email) {
+             // Cek tabel warga berdasarkan email
+             const { data, error } = await supabase
+               .from('warga')
+               .select('nama_lengkap')
+               .eq('email', user.email)
+               .maybeSingle();
+
+             if (!error && data && data.nama_lengkap) {
+                fetchedName = data.nama_lengkap.trim();
+             }
+          }
+
+          if (fetchedName) {
+             setDisplayName(fetchedName);
+             setInitial(fetchedName.charAt(0).toUpperCase());
+          }
+        }
+      } catch (error) {
+        console.warn("Info: Gagal mengambil data admin. Menggunakan data default.");
+      }
+    };
+
+    fetchAdminProfile();
+
+    // 2. Generate Tanggal Real-time (Format Indonesia)
+    const today = new Date();
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    setCurrentDate(today.toLocaleDateString('id-ID', options));
+  }, []);
 
   // Data Dummy Aktivitas Terbaru
   const activities = [
@@ -22,11 +74,11 @@ export default function DashboardAdmin() {
           <header className="appbar">
             {/* Tombol Back */}
             <Link className="appbar__back" href="/dashboard" aria-label="Kembali ke Dashboard">
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="19" y1="12" x2="5" y2="12" />
-    <polyline points="12 19 5 12 12 5" />
-  </svg>
-</Link>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12" />
+                <polyline points="12 19 5 12 12 5" />
+              </svg>
+            </Link>
             <div className="appbar__text">
               <h1>Dashboard Admin</h1>
               <p>Ringkasan RT 01/RW 02</p>
@@ -35,11 +87,12 @@ export default function DashboardAdmin() {
 
           <div className="stack">
             
+            {/* Greeting Card Dinamis */}
             <div className="greeting">
-              <div className="greeting__avatar" aria-hidden="true">B</div>
+              <div className="greeting__avatar" aria-hidden="true">{initial}</div>
               <div>
-                <p className="greeting__title" id="greeting">Selamat pagi, Pak Budi</p>
-                <p className="greeting__sub">Administrator • 3 Oktober 2026</p>
+                <p className="greeting__title" id="greeting">Selamat pagi, {displayName}</p>
+                <p className="greeting__sub">Administrator • {currentDate}</p>
               </div>
             </div>
 
