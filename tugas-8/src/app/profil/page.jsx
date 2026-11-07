@@ -3,35 +3,32 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
-import { supabase } from '../../lib/supabase'; // Pastikan path ke supabase.js ini benar
+import { supabase } from '../../lib/supabase';
 import './profil.css';
 
 export default function Profil() {
   const router = useRouter();
   
-  // State untuk menyimpan nama lengkap dan inisial
-  const [fullName, setFullName] = useState("-"); // Default nama
-  const [initial, setInitial] = useState("-"); // Default inisial
+  const [fullName, setFullName] = useState("-"); 
+  const [initial, setInitial] = useState("-"); 
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const { data: { user }, error: authError } = await supabase.auth.getUser();
-        
         if (authError) throw authError;
 
         if (user) {
           let fetchedName = "";
 
-          // Coba ambil dari metadata Auth terlebih dahulu
           if (user.user_metadata && user.user_metadata.full_name) {
              fetchedName = user.user_metadata.full_name.trim();
           } else if (user.email) {
-             // Jika tidak ada di metadata, coba cari di tabel warga berdasarkan email
+             // Case-insensitive fetch
              const { data, error } = await supabase
                .from('warga')
                .select('nama_lengkap')
-               .eq('email', user.email)
+               .ilike('email', user.email)
                .maybeSingle();
 
              if (!error && data && data.nama_lengkap) {
@@ -39,21 +36,21 @@ export default function Profil() {
              }
           }
 
-          // Jika berhasil mendapatkan nama, update state fullName dan inisialnya
           if (fetchedName) {
              setFullName(fetchedName);
              setInitial(fetchedName.charAt(0).toUpperCase());
           }
         }
       } catch (error) {
-        console.warn("Info: Gagal mengambil data user profil. Menggunakan nama default.");
+        console.warn("Info: Gagal mengambil data user profil.");
       }
     };
 
     fetchUserProfile();
   }, []);
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
     router.push('/signin');
   };
 
@@ -61,26 +58,18 @@ export default function Profil() {
     <div className="app-profil">
       <main className="view-profil">
         
-        {/* Bagian Atas: Profil Hero */}
         <header className="hero">
           <h1 className="hero__title">Profil Saya</h1>
-          
-          {/* Avatar Dinamis */}
           <div className="avatar-profil" aria-hidden="true">{initial}</div>
-          
-          {/* Nama Lengkap Dinamis */}
           <p className="hero__name">{fullName}</p>
-          
           <span className="badge-verified">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              <path d="M9 12l2 2 4-4"/>
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>
             </svg>
             Warga terverifikasi
           </span>
         </header>
 
-        {/* Bagian Tengah: Menu Kelola Akun */}
         <div className="sheet">
           <h2 className="sheet__title">Kelola akun</h2>
           <p className="lead">Perbarui data pribadi dan akses layanan pengaduan warga.</p>
@@ -88,86 +77,56 @@ export default function Profil() {
           <Link className="menu-card" href="/detail-profil">
             <span className="menu-card__icon">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
               </svg>
             </span>
             <span className="menu-card__text">
               <strong>Detail Profil</strong>
               <small>Periksa dan ubah data diri</small>
             </span>
-            <svg className="menu-card__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 18 15 12 9 6"/>
-            </svg>
+            <svg className="menu-card__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </Link>
 
           <Link className="menu-card" href="/pengaduan">
             <span className="menu-card__icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-              </svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             </span>
             <span className="menu-card__text">
               <strong>Pengaduan</strong>
               <small>Kirim laporan kepada pengurus</small>
             </span>
-            <svg className="menu-card__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 18 15 12 9 6"/>
-            </svg>
+            <svg className="menu-card__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </Link>
 
-          {/* Tombol Sign Out (Warna Merah) */}
           <button type="button" className="menu-card menu-card--danger" onClick={handleSignOut}>
             <span className="menu-card__icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="3 6 5 6 21 6"/>
-                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
-              </svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
             </span>
             <span className="menu-card__text">
               <strong>Sign Out</strong>
               <small>Keluar dari akun ini</small>
             </span>
-            <svg className="menu-card__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 18 15 12 9 6"/>
-            </svg>
+            <svg className="menu-card__chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
 
           <p className="hint">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-              <circle cx="12" cy="12" r="10"/>
-              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
-              <line x1="12" y1="17" x2="12.01" y2="17"/>
-            </svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             <span>Pastikan data profil selalu terbaru agar layanan warga tetap tepat sasaran.</span>
           </p>
         </div>
       </main>
 
-      {/* Bagian Bawah: Navigasi Tabbar */}
       <nav className="tabbar" aria-label="Navigasi utama">
         <Link className="tabbar__item" href="/dashboard">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-            <polyline points="9 22 9 12 15 12 15 22"/>
-          </svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
           <span>Beranda</span>
         </Link>
         <Link className="tabbar__item" href="/katalog">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
-            <line x1="12" y1="22.08" x2="12" y2="12"/>
-          </svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
           <span>Katalog</span>
         </Link>
         <Link className="tabbar__item" href="/profil" aria-current="page">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
-          </svg>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
           <span>Profil</span>
         </Link>
       </nav>

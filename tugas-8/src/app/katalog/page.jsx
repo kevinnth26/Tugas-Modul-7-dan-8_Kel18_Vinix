@@ -70,16 +70,23 @@ const isAvailable = stok > 0;
     <>
       <div className="mobile-wrapper">
         <div className="header">
-          <Link href="/dashboard" className="back-btn">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A365D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M19 12H5M12 19l-7-7 7-7"/>
-            </svg>
-          </Link>
-          <div className="header-text">
-            <h1>Katalog Inventaris</h1>
-            <p>Aset bersama RT 01/RW 02</p>
-          </div>
-        </div>
+  <Link href="/dashboard" className="back-btn">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A365D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+  </Link>
+  <div className="header-text" style={{ flex: 1 }}> {/* Tambahkan flex: 1 */}
+    <h1>Katalog Inventaris</h1>
+    <p>Aset bersama RT 01/RW 02</p>
+  </div>
+  {/* Tambahkan tombol History ini */}
+  <Link href="/history-peminjaman" style={{ padding: '8px' }}>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A365D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <polyline points="12 6 12 12 16 14"/>
+    </svg>
+  </Link>
+</div>
         <hr className="divider" />
 
         <div className="content-area">

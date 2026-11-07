@@ -42,7 +42,7 @@ function FormPeminjamanContent() {
         imgPath = '/mejapanjang.png';
       } else if (nameLower.includes('suara') || nameLower.includes('sound') || nameLower.includes('speaker')) {
         imgPath = '/pengerassuara.png';
-      } else if (nameLower.includes('tenda')) {
+      } else if (nameLower.includes('tenda') || nameLower.includes('dome')) {
         imgPath = '/tenda.png';
       }
 
@@ -60,21 +60,46 @@ function FormPeminjamanContent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const dataToInsert = {
-      warga_id: 1, 
-      inventaris_id: Number(assetData.id) || 1,
-      jumlah_pinjam: Number(formData.jumlah_pinjam),
-      tanggal_pinjam: formData.tanggal_pinjam,
-      tanggal_kembali: formData.tanggal_kembali,
-      status: 'Menunggu'
-    };
+    try {
+      // 1. Dapatkan user yang sedang login dari Supabase Auth
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      if (authError || !user) {
+        alert("Anda harus login terlebih dahulu untuk meminjam barang.");
+        return;
+      }
 
-    const { error } = await supabase.from('peminjaman').insert([dataToInsert]);
+      // 2. Dapatkan warga_id yang valid berdasarkan email user
+      const { data: dataWarga, error: wargaError } = await supabase
+        .from('warga')
+        .select('id')
+        .eq('email', user.email)
+        .maybeSingle();
 
-    if (error) {
-      alert('Gagal mengajukan peminjaman: ' + error.message);
-    } else {
-      setIsSubmitted(true);
+      if (wargaError || !dataWarga) {
+        alert("Data warga tidak ditemukan. Pastikan email Anda terdaftar di sistem.");
+        return;
+      }
+
+      // 3. Masukkan data ke tabel peminjaman menggunakan warga_id asli
+      const dataToInsert = {
+        warga_id: dataWarga.id, // Menggunakan ID dinamis dari database
+        inventaris_id: Number(assetData.id) || 1,
+        jumlah_pinjam: Number(formData.jumlah_pinjam),
+        tanggal_pinjam: formData.tanggal_pinjam,
+        tanggal_kembali: formData.tanggal_kembali,
+        status: 'Menunggu'
+      };
+
+      const { error: insertError } = await supabase.from('peminjaman').insert([dataToInsert]);
+
+      if (insertError) {
+        alert('Gagal mengajukan peminjaman: ' + insertError.message);
+      } else {
+        setIsSubmitted(true); // Tampilkan tiket sukses
+      }
+    } catch (err) {
+      console.error("Terjadi kesalahan sistem:", err);
+      alert("Terjadi kesalahan saat memproses pengajuan.");
     }
   };
 
@@ -192,9 +217,16 @@ function FormPeminjamanContent() {
               </div>
             </div>
 
-            <div id="postSubmitNote" className="info-box" style={{ marginTop: '1rem' }}>
+            <div id="postSubmitNote" className="info-box" style={{ marginTop: '1.5rem', marginBottom: '1rem' }}>
               <p>Pengajuan berhasil dikirim dan tersimpan di database!</p>
             </div>
+            
+            {/* Tombol pintasan langsung menuju History */}
+            <Link href="/history-peminjaman" style={{ textDecoration: 'none' }}>
+              <button type="button" className="btn-submit" style={{ backgroundColor: '#F59E0B', color: '#78350F' }}>
+                Lihat Riwayat Peminjaman
+              </button>
+            </Link>
           </>
         )}
 

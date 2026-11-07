@@ -1,0 +1,127 @@
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+}
+
+/* 1. KERANGKA UTAMA (Disamakan dengan page lain) */
+body { 
+    background-color: #e2e8f0; 
+    margin: 0; 
+}
+
+.mobile-wrapper { 
+    width: 100%; 
+    max-width: 480px; /* Lebar maksimal agar serasi di desktop */
+    min-height: 100vh; /* Memanjang dari atas ke bawah */
+    margin: 0 auto; /* Posisi terpusat secara horizontal di desktop */
+    background-color: #F9FAFB; 
+    display: flex; 
+    flex-direction: column; 
+    box-shadow: 0 0 20px rgba(0,0,0,0.05); 
+}
+
+/* 2. HEADER */
+.header { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    padding: 2rem 1.5rem 1rem 1.5rem; 
+    background: white;
+}
+.back-btn { 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    text-decoration: none; 
+    cursor: pointer;
+}
+.header-text h1 { font-size: 1.25rem; font-weight: 700; color: #111827; margin-bottom: 2px; }
+.header-text p { font-size: 0.75rem; color: #6B7280; }
+.divider { border: 0; height: 1px; background: #E5E7EB; }
+
+/* 3. AREA KONTEN DAN LIST KARTU */
+.content-area { 
+    flex: 1; 
+    padding: 1.5rem; 
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Jarak antar kartu */
+}
+
+/* 4. DESAIN KARTU (HISTORY CARD) */
+.history-card {
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.status-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.icon-clock {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* Status: Menunggu (Kuning) */
+.history-card--yellow {
+    background-color: #FEF3C7; 
+    border: 1px solid #FDE68A;
+}
+.history-card--yellow .status-text h4 { color: #92400E; font-size: 1.1rem; font-weight: 700; margin-bottom: 2px; }
+.history-card--yellow .status-text p { color: #B45309; font-size: 0.8rem; }
+.history-card--yellow .card-divider { border-top: 1px dashed #D97706; margin: 12px 0; opacity: 0.4; }
+.history-card--yellow .detail-label { color: #D97706; font-size: 0.7rem; font-weight: 600; margin-bottom: 4px; text-transform: uppercase; }
+.history-card--yellow .detail-val { color: #78350F; font-weight: 700; font-size: 0.9rem; }
+.icon-clock--yellow { background-color: #B45309; color: white; }
+
+/* Status: Diterima (Hijau) */
+.history-card--green {
+    background-color: #D1FAE5; 
+    border: 1px solid #A7F3D0;
+}
+.history-card--green .status-text h4 { color: #065F46; font-size: 1.1rem; font-weight: 700; margin-bottom: 2px; }
+.history-card--green .status-text p { color: #059669; font-size: 0.8rem; }
+.history-card--green .card-divider { border-top: 1px dashed #10B981; margin: 12px 0; opacity: 0.4; }
+.history-card--green .detail-label { color: #059669; font-size: 0.7rem; font-weight: 600; margin-bottom: 4px; text-transform: uppercase; }
+.history-card--green .detail-val { color: #064E3B; font-weight: 700; font-size: 0.9rem; }
+.icon-clock--green { background-color: #059669; color: white; }
+
+/* Status: Ditolak (Merah) */
+.history-card--red {
+    background-color: #FEE2E2; 
+    border: 1px solid #FECACA;
+}
+.history-card--red .status-text h4 { color: #991B1B; font-size: 1.1rem; font-weight: 700; margin-bottom: 2px; }
+.history-card--red .status-text p { color: #DC2626; font-size: 0.8rem; }
+.history-card--red .card-divider { border-top: 1px dashed #EF4444; margin: 12px 0; opacity: 0.4; }
+.history-card--red .detail-label { color: #DC2626; font-size: 0.7rem; font-weight: 600; margin-bottom: 4px; text-transform: uppercase; }
+.history-card--red .detail-val { color: #7F1D1D; font-weight: 700; font-size: 0.9rem; }
+.icon-clock--red { background-color: #DC2626; color: white; }
+
+/* 5. STRUKTUR DETAIL KARTU */
+.status-details {
+    display: flex;
+    justify-content: space-between;
+}
+.detail-col {
+    display: flex;
+    flex-direction: column;
+}
+.detail-col.right {
+    text-align: right;
+}
